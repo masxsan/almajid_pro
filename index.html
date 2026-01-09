@@ -292,7 +292,7 @@
         })();
     </script>
     <!-- END OVERLAY AKTIVASI -->
- <div id="main-container" class="h-full w-full gradient-bg text-white overflow-auto" style="height: 100vh; display: grid; grid-template-rows: 14vh 12vh calc(50vh + 1cm) calc(24vh - 1cm); overflow: hidden;"><!-- Header Banner -->
+ <div id="main-container" class="h-full w-full gradient-bg text-white overflow-auto" style="height: 100vh; display: grid; grid-template-rows: 14vh 12vh calc(50vh + 0.5cm) calc(24vh - 1.5cm); overflow: hidden;"><!-- Header Banner -->
    <div id="header-banner" class="gold-border" style="background: linear-gradient(90deg, #1a4d2e 0%, #2d6b42 50%, #1a4d2e 100%); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;"><!-- Jam Digital -->
     <div style="flex: 1;">
      <div id="current-time" style="font-size: 36px; font-weight: 800; color: white; letter-spacing: 2px;">
@@ -303,7 +303,7 @@
      </div>
     </div><!-- Nama Masjid -->
     <div style="flex: 2; text-align: center;">
-     <div id="mosque-name" style="font-size: 35px; font-weight: 800; color: #d4af37; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 4px;">
+     <div id="mosque-name" style="font-size: 35px; font-weight: 800; color: #d4af37; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 4px; padding-top: 10px;">
       MASJID AL-IKHLAS
      </div>
      <div id="mosque-address" style="font-size: 20px; color: white; opacity: 0.9; font-weight: 700;">
@@ -324,94 +324,94 @@
      </div>
     </div>
    </div><!-- Kartu Waktu Sholat -->
-  <div style="padding: 16px 24px; height: 100%; overflow: hidden;">
-    <div id="prayer-cards" style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; min-height: 100px;"><!-- Cards will be inserted here -->
+  <div style="padding: 6px 14px; height: 100%; overflow: hidden;">
+    <div id="prayer-cards" style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; min-height: 95px;"><!-- Cards will be inserted here -->
     </div>
    </div><!-- Body Tengah (4 Kolom) -->
-  <div id="main-content-grid" style="padding: 0 24px 0 24px; display: grid; grid-template-columns: 0.75fr 0.75fr 2.2fr 1.35fr; gap: 12px; height: 100%; overflow: hidden;"><!-- Kolom Kiri 1+2: Foto Takmir dalam satu kontainer -->
-   <div id="photos-container" style="grid-column: 1 / span 2; background: transparent; border-radius: 12px; padding: 0; border: none; box-shadow: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: calc(100% - 2cm); overflow: hidden;">
+  <div id="main-content-grid" style="padding: 0 14px 0 14px; display: grid; grid-template-columns: 0.75fr 0.75fr 2.2fr 1.35fr; gap: 2px; height: 100%; overflow: hidden;"><!-- Kolom Kiri 1+2: Foto Takmir dalam satu kontainer -->
+   <div id="photos-container" style="grid-column: 1 / span 2; background: transparent; border-radius: 7px; padding: 0; border: none; box-shadow: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: calc(100% - 2.5cm); overflow: hidden;">
     <div id="left-col-1" style="display: flex; flex-direction: column; gap: 0px; height: 100%; min-height: 0;">
         <div style="background: transparent; border: none; padding: 0; flex: 1.3; display: flex; flex-direction: column; justify-content: center; box-shadow: none !important; -webkit-box-shadow: none !important; overflow: hidden; min-height: 0;">
-            <div id="takmir-display-1" style="display: flex; flex-direction: column; gap: 10px; height: 100%;"></div>
+            <div id="takmir-display-1" style="display: flex; flex-direction: column; gap: 0px; height: 100%;"></div>
         </div>
-        <div id="takmir-display-3" style="flex: 0.7; display: flex; flex-direction: column; gap: 10px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
+        <div id="takmir-display-3" style="flex: 0.7; display: flex; flex-direction: column; gap: 0px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
     </div><!-- Kolom Kiri 2: Foto Takmir -->
     <div id="left-col-2" style="display: flex; flex-direction: column; gap: 0px; height: 100%; min-height: 0;">
         <div style="background: transparent; border: none; padding: 0; flex: 1.3; display: flex; flex-direction: column; justify-content: center; box-shadow: none !important; -webkit-box-shadow: none !important; overflow: hidden; min-height: 0;">
-            <div id="takmir-display-2" style="display: flex; flex-direction: column; gap: 10px; height: 100%;"></div>
+            <div id="takmir-display-2" style="display: flex; flex-direction: column; gap: 0px; height: 100%;"></div>
         </div>
-        <div id="takmir-display-4" style="flex: 0.7; display: flex; flex-direction: column; gap: 10px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
+        <div id="takmir-display-4" style="flex: 0.7; display: flex; flex-direction: column; gap: 0px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
     </div>
    </div><!-- Kolom Tengah: Slideshow Pengumuman -->
-   <div class="gold-border shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 5px; height: calc(100% - 2cm); display: flex; flex-direction: column; position: relative; overflow: hidden; border: 2px solid #d4af37;">
-     <div id="announcement-title-container" style="display: flex; align-items: center; margin-bottom: 10px;">
+   <div class="gold-border shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 7px; padding: 0px; height: calc(100% - 2.5cm); display: flex; flex-direction: column; position: relative; overflow: hidden; border: 2px solid #d4af37;">
+     <div id="announcement-title-container" style="display: flex; align-items: center; margin-bottom: 5px;">
       <svg style="width: 20px; height: 20px; color: #d4af37; margin-right: 8px;" fill="currentColor" viewbox="0 0 20 20"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
       </svg>
-      <div id="announcement-title" style="font-size: 25px; font-weight: 700; color: #d4af37;">
+      <div id="announcement-title" style="font-size: 10px; font-weight: 700; color: #d4af37;">
        PENGUMUMAN MASJID
       </div>
      </div><!-- Text Announcement -->
-     <div id="text-announcement-container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center; overflow: hidden;">
-      <div id="announcement-text" style="font-size: 22.5px; line-height: 1.8; color: white;">
+     <div id="text-announcement-container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 15px; text-align: center; overflow: hidden;">
+      <div id="announcement-text" style="font-size: 12.5px; line-height: 1.8; color: white;">
        ${currentAnnouncement}
       </div>
      </div><!-- Slideshow Container -->
     <div id="slideshow-container" style="flex: 1; position: relative; border-radius: 0; overflow: hidden; background: rgba(0, 0, 0, 0.3); width: 100%; height: 100%; min-height: 0; margin: 0; display: none;"><!-- Slides will be inserted here -->
      </div><!-- Slide Navigation Dots -->
-     <div id="slide-dots" style="display: none; justify-content: center; gap: 8px; margin-top: 12px;"><!-- Dots will be inserted here -->
+     <div id="slide-dots" style="display: none; justify-content: center; gap: 3px; margin-top: 7px;"><!-- Dots will be inserted here -->
      </div>
     </div><!-- Kolom Kanan: Info Masjid -->
-   <div class="shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 12px; height: calc(100% - 2cm); overflow: hidden; min-height: 0;">
-     <div style="font-size: 18.75px; font-weight: 700; color: #d4af37; margin-bottom: 10px; text-align: center;">
+   <div class="shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 7px; padding: 7px; height: calc(100% - 2.5cm); overflow: hidden; min-height: 0;">
+     <div style="font-size: 13.75px; font-weight: 700; color: #d4af37; margin-bottom: 5px; text-align: center;">
            ️ INFO MASJID
      </div>
-    <div id="info-masjid-display" style="display: flex; flex-direction: column; gap: 8px; font-size: 10px; color: white;">
-      <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
-       <div style="opacity: 0.8; font-size: 7.5px; font-weight: 600; margin-bottom: 2px;">
+    <div id="info-masjid-display" style="display: flex; flex-direction: column; gap: 3px; font-size: 2px; color: white;">
+      <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; border-left: 3px solid #d4af37;">
+       <div style="opacity: 0.8; font-size: 2.5px; font-weight: 600; margin-bottom: 2px;">
         Kapasitas
        </div>
-       <div style="font-weight: 700; font-size: 7px;">
+       <div style="font-weight: 700; font-size: 2px;">
         500 Jamaah
        </div>
       </div>
-      <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
-       <div style="opacity: 0.8; font-size: 7.5px; font-weight: 600; margin-bottom: 2px;">
+      <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; border-left: 3px solid #d4af37;">
+       <div style="opacity: 0.8; font-size: 2.5px; font-weight: 600; margin-bottom: 2px;">
         Fasilitas
        </div>
-       <div style="font-weight: 700; font-size: 7px;">
+       <div style="font-weight: 700; font-size: 2px;">
         AC, Parkir
        </div>
       </div>
      
-     <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
-       <div style="opacity: 0.8; font-size: 15px; font-weight: 600; margin-bottom: 2px;">
+     <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; border-left: 3px solid #d4af37;">
+       <div style="opacity: 0.8; font-size: 10px; font-weight: 600; margin-bottom: 2px;">
         Kontak
        </div>
-       <div style="font-weight: 700; font-size: 14px;">
+       <div style="font-weight: 700; font-size: 9px;">
         0812-3456-7890
        </div>
       </div>
-      <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
-       <div style="opacity: 0.8; font-size: 15px; font-weight: 600; margin-bottom: 2px;">
+      <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; border-left: 3px solid #d4af37;">
+       <div style="opacity: 0.8; font-size: 10px; font-weight: 600; margin-bottom: 2px;">
         Info Ramadhan/Raya
        </div>
-       <div style="font-weight: 700; font-size: 14px;">
+       <div style="font-weight: 700; font-size: 9px;">
         Kajian Menjelang Berbuka
        </div>
       </div>
-      <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
-        <div style="opacity: 0.8; font-size: 15px; font-weight: 600; margin-bottom: 2px;">
+      <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; border-left: 3px solid #d4af37;">
+        <div style="opacity: 0.8; font-size: 10px; font-weight: 600; margin-bottom: 2px;">
          Info Qurban
         </div>
-        <div style="font-weight: 700; font-size: 14px;">
+        <div style="font-weight: 700; font-size: 9px;">
          Sapi: 3, Kambing: 15 (Panitia: Bpk. Ahmad)
         </div>
        </div>
-       <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
-        <div style="opacity: 0.8; font-size: 15px; font-weight: 600; margin-bottom: 2px;">
+       <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; border-left: 3px solid #d4af37;">
+        <div style="opacity: 0.8; font-size: 10px; font-weight: 600; margin-bottom: 2px;">
          No. Rekening
         </div>
-        <div style="font-weight: 700; font-size: 14px;">
+        <div style="font-weight: 700; font-size: 9px;">
          BSI 1234567890 a.n Masjid Al-Ikhlas
         </div>
        </div>
@@ -1229,7 +1229,7 @@
                     <div style="font-size: 48px; font-weight: 900; color: white; margin-bottom: 6px; text-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);">${adzanPrayerName.toUpperCase()}</div>
                     <div style="font-size: 18px; color: #d4af37; margin-bottom: 8px; opacity: 0.9;">Mari segera menuju masjid untuk menunaikan sholat berjamaah</div>
                     <div style="width: 80%; height: 3px; background: linear-gradient(90deg, transparent, #d4af37, transparent); margin: 6px 0;"></div>
-                    <div style="font-size: 14px; color: white; opacity: 0.8; font-style: italic;">"Dan dirikanlah sholat, sesungguhnya sholat itu mencegah dari perbuatan keji dan mungkar" (QS. Al-Ankabut: 45)</div>
+                    <div style="font-size: 9px; color: white; opacity: 0.8; font-style: italic;">"Dan dirikanlah sholat, sesungguhnya sholat itu mencegah dari perbuatan keji dan mungkar" (QS. Al-Ankabut: 45)</div>
                     ${adzanAudioUrl ? '<div style="margin-top: 12px; color: #d4af37; font-size: 16px;">     Suara Adzan Sedang Diputar</div>' : ''}
                 </div>
             `;
@@ -1378,7 +1378,7 @@
                         <div style="background: transparent; border: none; padding: 0; flex: 1.3; display: flex; flex-direction: column; justify-content: center; box-shadow: none !important; -webkit-box-shadow: none !important; overflow: hidden; min-height: 0;">
                             <div id="takmir-display-1" style="display: flex; flex-direction: column; gap: 10px; height: 100%;"></div>
                         </div>
-                        <div id="takmir-display-3" style="flex: 0.7; display: flex; flex-direction: column; gap: 10px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
+                        <div id="takmir-display-3" style="flex: 0.7; display: flex; flex-direction: column; gap: 0px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
                     `;
                 }
             }
@@ -1853,7 +1853,7 @@
                 <!-- HOSTING EXPORT -->
                 <div style="background: rgba(26, 77, 46, 0.8); padding: 20px; border-radius: 12px; border: 2px solid #d4af37; margin-bottom: 24px;">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">🌐 Persiapan Hosting (Wajib untuk Upload)</h4>
-                    <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-bottom: 16px;">
+                    <p style="color: rgba(255,255,255,0.9); font-size: 9px; margin-bottom: 16px;">
                         Agar data masjid Anda (Nama, Jadwal, Running Text, dll) tetap tersimpan saat di-upload ke hosting:
                         <br>1. Klik tombol di bawah ini untuk download file <b>masjid_config.json</b>
                         <br>2. Upload file tersebut bersama <b>index.html</b> ke hosting Anda.
@@ -1865,7 +1865,7 @@
 
                 <div style="background: rgba(212, 175, 55, 0.1); padding: 20px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.5); margin-bottom: 24px;">
                     <h4 style="color: white; font-size: 16px; margin-bottom: 12px; font-weight: 700;">⬇️ Download Backup (Untuk PC Lain)</h4>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 16px;">
+                    <p style="color: rgba(255,255,255,0.7); font-size: 9px; margin-bottom: 16px;">
                         Simpan data sebagai backup pribadi. Format nama file ada tanggalnya.
                     </p>
                     <button onclick="downloadBackup()" style="background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 1px solid #d4af37; border-radius: 8px; padding: 8px 16px; font-weight: 700; cursor: pointer;">
@@ -1875,7 +1875,7 @@
 
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border: 2px dashed rgba(212, 175, 55, 0.5);">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">⬆️ Restore Data dari File</h4>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 16px;">
+                    <p style="color: rgba(255,255,255,0.7); font-size: 9px; margin-bottom: 16px;">
                         Kembalikan pengaturan dari file backup atau config.
                     </p>
                     <input type="file" id="restore-upload" accept=".json" style="display: none;" onchange="handleRestoreUpload(event)">
@@ -2069,7 +2069,7 @@
         function renderBackgroundTab() {
             return `
                 <h3 style="color: #d4af37; font-size: 20px; margin-bottom: 16px;">🎨 Pilih Template Background</h3>
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px;">
+                <div style="color: rgba(255, 255, 255, 0.7); font-size: 9px; margin-bottom: 20px;">
                     Pilih jenis background yang ingin ditampilkan di layar utama:
                 </div>
                 
@@ -2106,7 +2106,7 @@
                 
                 <div style="margin-top: 20px; padding: 16px; background: rgba(212, 175, 55, 0.1); border-left: 4px solid #d4af37; border-radius: 6px;">
                     <div style="color: #d4af37; font-weight: 700; margin-bottom: 8px;">💡 Tips:</div>
-                    <ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">
+                    <ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">
                         <li><strong>Warna Solid:</strong> Cocok untuk tampilan yang simpel dan elegan</li>
                         <li><strong>Gradasi:</strong> Memberikan kesan modern dengan perpaduan 2 warna</li>
                         <li><strong>Gambar:</strong> Gunakan foto masjid atau motif islami sebagai background</li>
@@ -2169,7 +2169,7 @@
                             <label style="display: block; color: white; margin-bottom: 8px; font-weight: 600;">URL Gambar:</label>
                             <input type="text" id="bg-image-url" value="${backgroundSettings.imageUrl}" placeholder="https://example.com/image.jpg" style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 16px; margin-bottom: 8px;">
                             <input type="file" id="bg-image-upload" accept="image/*" style="display: none;" onchange="handleBgImageUpload(event)">
-                            <button onclick="document.getElementById('bg-image-upload').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 10px; cursor: pointer; font-size: 14px; font-weight: 600;">   Upload dari Komputer</button>
+                            <button onclick="document.getElementById('bg-image-upload').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 10px; cursor: pointer; font-size: 9px; font-weight: 600;">   Upload dari Komputer</button>
                         </div>
                         <div>
                             <label style="display: block; color: white; margin-bottom: 8px; font-weight: 600;">Transparansi Gambar: <span id="opacity-display" style="color: #d4af37;">${Math.round(backgroundSettings.imageOpacity * 100)}%</span></label>
@@ -2360,7 +2360,7 @@
                 <div style="background: rgba(212, 175, 55, 0.1); padding: 16px; border-radius: 8px; border: 1px dashed #d4af37; margin-bottom: 24px;">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">📂 Import Jadwal Excel (Otomatis)</h4>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                        <button onclick="downloadTemplate()" style="background: #1a4d2e; color: #d4af37; border: 1px solid #d4af37; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+                        <button onclick="downloadTemplate()" style="background: #1a4d2e; color: #d4af37; border: 1px solid #d4af37; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 9px;">
                             📥 Download Template
                         </button>
                         <input type="file" id="excel-upload" accept=".xlsx, .xls" style="color: white;">
@@ -2391,7 +2391,7 @@
 
         function renderVisibilityTab() {
             let html = '<h3 style="color: #d4af37; font-size: 20px; margin-bottom: 16px;">👁️ Atur Tampilan Waktu Sholat</h3>';
-            html += '<div style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px;">Pilih waktu sholat mana yang ingin ditampilkan di layar utama:</div>';
+            html += '<div style="color: rgba(255, 255, 255, 0.7); font-size: 9px; margin-bottom: 20px;">Pilih waktu sholat mana yang ingin ditampilkan di layar utama:</div>';
             html += '<div style="display: flex; flex-direction: column; gap: 12px;">';
             
             prayerTimes.forEach((prayer, index) => {
@@ -2401,10 +2401,10 @@
                             <div style="font-size: 32px;">${prayer.visible ? '✅' : '⬜'}</div>
                             <div>
                                 <div style="color: ${prayer.visible ? '#d4af37' : 'white'}; font-weight: 700; font-size: 18px; margin-bottom: 4px;">${prayer.name}</div>
-                                <div style="color: ${prayer.visible ? '#d4af37' : 'rgba(255, 255, 255, 0.6)'}; font-size: 14px;">${prayer.time}</div>
+                                <div style="color: ${prayer.visible ? '#d4af37' : 'rgba(255, 255, 255, 0.6)'}; font-size: 9px;">${prayer.time}</div>
                             </div>
                         </div>
-                        <div style="background: ${prayer.visible ? '#d4af37' : 'rgba(255, 255, 255, 0.2)'}; color: ${prayer.visible ? '#1a4d2e' : 'white'}; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 14px;">
+                        <div style="background: ${prayer.visible ? '#d4af37' : 'rgba(255, 255, 255, 0.2)'}; color: ${prayer.visible ? '#1a4d2e' : 'white'}; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 9px;">
                             ${prayer.visible ? 'TAMPILKAN' : 'SEMBUNYIKAN'}
                         </div>
                     </div>
@@ -2414,7 +2414,7 @@
             html += '</div>';
             html += '<div style="margin-top: 20px; padding: 16px; background: rgba(212, 175, 55, 0.1); border-left: 4px solid #d4af37; border-radius: 6px;">';
             html += '<div style="color: #d4af37; font-weight: 700; margin-bottom: 8px;">💡 Tips:</div>';
-            html += '<ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">';
+            html += '<ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">';
             html += '<li><strong>Imsak, Syuruq, Dhuha:</strong> Waktu-waktu ini bisa disembunyikan jika tidak diperlukan</li>';
             html += '<li><strong>Subuh, Dzuhur, Ashar, Maghrib, Isya:</strong> Waktu sholat wajib yang biasanya ditampilkan</li>';
             html += '<li>Klik pada kotak untuk mengubah status tampilan</li>';
@@ -2596,7 +2596,7 @@
         function renderModePengumumanTab() {
             return `
                 <h3 style="color: #d4af37; font-size: 20px; margin-bottom: 16px;">🎨 Pilih Mode Tampilan Pengumuman</h3>
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px;">
+                <div style="color: rgba(255, 255, 255, 0.7); font-size: 9px; margin-bottom: 20px;">
                     Pilih bagaimana Anda ingin menampilkan pengumuman di layar utama:
                 </div>
                 
@@ -2605,7 +2605,7 @@
                     <div onclick="selectAnnouncementMode('text')" style="background: ${announcementMode === 'text' ? 'linear-gradient(135deg, #d4af37 0%, #c9a636 100%)' : 'rgba(255, 255, 255, 0.05)'}; border: 3px solid ${announcementMode === 'text' ? '#d4af37' : 'rgba(212, 175, 55, 0.3)'}; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.3s; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 12px;">📝</div>
                         <h4 style="color: ${announcementMode === 'text' ? '#1a4d2e' : '#d4af37'}; font-size: 18px; margin-bottom: 8px; font-weight: 800;">MODE TEKS</h4>
-                        <p style="color: ${announcementMode === 'text' ? '#1a4d2e' : 'white'}; font-size: 14px; line-height: 1.6; opacity: 0.9;">Tampilkan pengumuman dalam bentuk teks yang mudah dibaca</p>
+                        <p style="color: ${announcementMode === 'text' ? '#1a4d2e' : 'white'}; font-size: 9px; line-height: 1.6; opacity: 0.9;">Tampilkan pengumuman dalam bentuk teks yang mudah dibaca</p>
                         ${announcementMode === 'text' ? '<div style="margin-top: 12px; background: #1a4d2e; color: #d4af37; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 12px;">✓ AKTIF SEKARANG</div>' : ''}
                     </div>
                     
@@ -2613,7 +2613,7 @@
                     <div onclick="selectAnnouncementMode('slideshow')" style="background: ${announcementMode === 'slideshow' ? 'linear-gradient(135deg, #d4af37 0%, #c9a636 100%)' : 'rgba(255, 255, 255, 0.05)'}; border: 3px solid ${announcementMode === 'slideshow' ? '#d4af37' : 'rgba(212, 175, 55, 0.3)'}; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.3s; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 12px;">🖼️</div>
                         <h4 style="color: ${announcementMode === 'slideshow' ? '#1a4d2e' : '#d4af37'}; font-size: 18px; margin-bottom: 8px; font-weight: 800;">MODE SLIDESHOW</h4>
-                        <p style="color: ${announcementMode === 'slideshow' ? '#1a4d2e' : 'white'}; font-size: 14px; line-height: 1.6; opacity: 0.9;">Tampilkan pengumuman dalam bentuk gambar slideshow otomatis</p>
+                        <p style="color: ${announcementMode === 'slideshow' ? '#1a4d2e' : 'white'}; font-size: 9px; line-height: 1.6; opacity: 0.9;">Tampilkan pengumuman dalam bentuk gambar slideshow otomatis</p>
                         ${announcementMode === 'slideshow' ? '<div style="margin-top: 12px; background: #1a4d2e; color: #d4af37; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 12px;">✓ AKTIF SEKARANG</div>' : ''}
                     </div>
 
@@ -2621,7 +2621,7 @@
                     <div onclick="selectAnnouncementMode('rotate')" style="background: ${announcementMode === 'rotate' ? 'linear-gradient(135deg, #d4af37 0%, #c9a636 100%)' : 'rgba(255, 255, 255, 0.05)'}; border: 3px solid ${announcementMode === 'rotate' ? '#d4af37' : 'rgba(212, 175, 55, 0.3)'}; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.3s; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 12px;">🔄</div>
                         <h4 style="color: ${announcementMode === 'rotate' ? '#1a4d2e' : '#d4af37'}; font-size: 18px; margin-bottom: 8px; font-weight: 800;">MODE ROTASI</h4>
-                        <p style="color: ${announcementMode === 'rotate' ? '#1a4d2e' : 'white'}; font-size: 14px; line-height: 1.6; opacity: 0.9;">Bergantian menampilkan Teks dan Slideshow secara otomatis</p>
+                        <p style="color: ${announcementMode === 'rotate' ? '#1a4d2e' : 'white'}; font-size: 9px; line-height: 1.6; opacity: 0.9;">Bergantian menampilkan Teks dan Slideshow secara otomatis</p>
                         ${announcementMode === 'rotate' ? '<div style="margin-top: 12px; background: #1a4d2e; color: #d4af37; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 12px;">✓ AKTIF SEKARANG</div>' : ''}
                     </div>
                 </div>
@@ -2631,7 +2631,7 @@
                 <div style="margin-top: 24px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">⚙️ Pengaturan Rotasi</h4>
                     <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <label style="color: white; font-size: 14px;">Durasi Tampil (Detik):</label>
+                        <label style="color: white; font-size: 9px;">Durasi Tampil (Detik):</label>
                         <div style="display: flex; gap: 12px; align-items: center;">
                             <input type="number" id="rotate-interval" value="${announcementRotationIntervalSec}" min="5" max="300" 
                                 onchange="updateRotationInterval(this.value)"
@@ -2646,13 +2646,13 @@
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">📣 Notifikasi Khutbah Jumat</h4>
                     <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end;">
                         <div>
-                            <label style="color: white; font-size: 14px;">Detik sebelum khutbah:</label>
+                            <label style="color: white; font-size: 9px;">Detik sebelum khutbah:</label>
                             <input type="number" id="friday-pre-seconds" value="${Math.max(0, parseInt(fridayNotifPreSeconds) || 0)}" min="0" max="3600"
                                 onchange="updateFridayNotifPreSeconds(this.value)"
                                 style="background: rgba(0,0,0,0.3); border: 1px solid #d4af37; color: white; padding: 8px 12px; border-radius: 6px; width: 120px;">
                         </div>
                         <div>
-                            <label style="color: white; font-size: 14px;">Durasi tampil selama khutbah (Menit):</label>
+                            <label style="color: white; font-size: 9px;">Durasi tampil selama khutbah (Menit):</label>
                             <input type="number" id="friday-post-minutes" value="${Math.max(1, parseInt(fridayNotifPostMinutes) || 1)}" min="1" max="180"
                                 onchange="updateFridayNotifPostMinutes(this.value)"
                                 style="background: rgba(0,0,0,0.3); border: 1px solid #d4af37; color: white; padding: 8px 12px; border-radius: 6px; width: 140px;">
@@ -2666,7 +2666,7 @@
                 
                 <div style="margin-top: 24px; padding: 16px; background: rgba(212, 175, 55, 0.1); border-left: 4px solid #d4af37; border-radius: 6px;">
                     <div style="color: #d4af37; font-weight: 700; margin-bottom: 8px;">💡 Tips:</div>
-                    <ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">
+                    <ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">
                         <li><strong>Mode Teks:</strong> Cocok untuk pengumuman singkat dan penting yang perlu dibaca dengan cepat</li>
                         <li><strong>Mode Slideshow:</strong> Cocok untuk pengumuman bergambar, event, atau informasi visual yang menarik</li>
                         <li><strong>Mode Rotasi:</strong> Menggabungkan keduanya agar jamaah mendapatkan semua informasi secara bergantian</li>
@@ -2764,11 +2764,11 @@ window.updateRotationInterval = function(val) {
                             <div style="display: flex; flex-direction: column; gap: 10px;">
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">Keterangan:</label>
-                                    <input type="text" id="slide-caption-${index}" value="${slide.caption}" placeholder="Keterangan slide" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px;">
+                                    <input type="text" id="slide-caption-${index}" value="${slide.caption}" placeholder="Keterangan slide" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px;">
                                 </div>
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">URL Gambar:</label>
-                                    <input type="text" id="slide-url-${index}" value="${slide.imageUrl}" placeholder="https://example.com/image.jpg" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px; margin-bottom: 8px;">
+                                    <input type="text" id="slide-url-${index}" value="${slide.imageUrl}" placeholder="https://example.com/image.jpg" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px; margin-bottom: 8px;">
                                     <input type="file" id="slide-upload-${index}" accept="image/*" style="display: none;" onchange="handleSlideUpload(${index}, event)">
                                     <button onclick="document.getElementById('slide-upload-${index}').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 8px; cursor: pointer; font-size: 12px; font-weight: 600;">📁 Upload dari Komputer</button>
                                 </div>
@@ -2938,17 +2938,17 @@ window.updateRotationInterval = function(val) {
                         <label style="display: block; color: white; margin-bottom: 8px; font-weight: 600;">Jadwal Petugas Jumat:</label>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                             <div>
-                                <label style="display: block; color: white; margin-bottom: 6px; font-size: 14px;">Nama Ketua:</label>
+                                <label style="display: block; color: white; margin-bottom: 6px; font-size: 9px;">Nama Ketua:</label>
                                 <input type="text" id="edit-friday-ketua" value="${infoMasjidData.fridayKetua || ''}" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white;">
                             </div>
                             <div>
-                                <label style="display: block; color: white; margin-bottom: 6px; font-size: 14px;">Nama Sekertaris:</label>
+                                <label style="display: block; color: white; margin-bottom: 6px; font-size: 9px;">Nama Sekertaris:</label>
                                 <input type="text" id="edit-friday-sekertaris" value="${infoMasjidData.fridaySekertaris || ''}" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white;">
                             </div>
                         </div>
                         
                         <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
-                            <label style="display: block; color: #d4af37; margin-bottom: 8px; font-weight: 600; font-size: 14px;">Daftar Jadwal (Hari/Tanggal | Imam | Khotib | Muadzin)</label>
+                            <label style="display: block; color: #d4af37; margin-bottom: 8px; font-weight: 600; font-size: 9px;">Daftar Jadwal (Hari/Tanggal | Imam | Khotib | Muadzin)</label>
                             <div id="friday-schedule-container">
                                 ${(infoMasjidData.fridaySchedule || []).map((item, idx) => `
                                     <div class="friday-row" style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr auto; gap: 8px; margin-bottom: 8px;">
@@ -2990,7 +2990,7 @@ window.updateRotationInterval = function(val) {
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <input type="range" id="info-rotate-interval" min="3" max="60" value="${infoRotateIntervalSec}" oninput="document.getElementById('info-rotate-interval-num').value=this.value" style="flex: 1;">
                             <input type="number" id="info-rotate-interval-num" min="3" max="60" value="${infoRotateIntervalSec}" oninput="document.getElementById('info-rotate-interval').value=this.value" style="width: 50px; padding: 4px; border-radius: 4px; border: 1px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; text-align: center;">
-                            <span style="color: white; font-size: 14px;">dtk</span>
+                            <span style="color: white; font-size: 9px;">dtk</span>
                         </div>
                     </div>
                 </div>
@@ -3216,7 +3216,7 @@ window.updateRotationInterval = function(val) {
                 <div style="background: rgba(212, 175, 55, 0.1); padding: 16px; border-radius: 8px; border: 1px dashed #d4af37; margin-bottom: 24px;">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">📂 Import Data Donatur (Excel)</h4>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                        <button onclick="downloadDonaturTemplate()" style="background: #1a4d2e; color: #d4af37; border: 1px solid #d4af37; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+                        <button onclick="downloadDonaturTemplate()" style="background: #1a4d2e; color: #d4af37; border: 1px solid #d4af37; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 9px;">
                             📥 Download Template
                         </button>
                         <input type="file" id="donatur-excel-upload" accept=".xlsx, .xls" style="color: white;">
@@ -3392,7 +3392,7 @@ window.updateRotationInterval = function(val) {
 
                     <!-- Rotation Settings -->
                     <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(212, 175, 55, 0.3);">
-                         <label style="display: block; color: white; margin-bottom: 8px; font-size: 14px; font-weight: 600;">⏱️ Interval Rotasi (Jika > 2 foto):</label>
+                         <label style="display: block; color: white; margin-bottom: 8px; font-size: 9px; font-weight: 600;">⏱️ Interval Rotasi (Jika > 2 foto):</label>
                          <div style="display: flex; gap: 12px; align-items: center;">
                             <input type="number" id="takmir-rotate-interval" value="${takmirRotationInterval}" min="5" max="300" style="background: rgba(0,0,0,0.3); border: 1px solid #d4af37; color: white; padding: 8px 12px; border-radius: 6px; width: 100px;">
                             <span style="color: rgba(255,255,255,0.6); font-size: 13px;">detik</span>
@@ -3404,7 +3404,7 @@ window.updateRotationInterval = function(val) {
                              <div class="preview-box" style="width: 100%; height: 200px; border-radius: 8px; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; border: 2px dashed #d4af37; overflow: hidden; margin-bottom: 8px;">
                                 ${leftColumnImageUrl ? `<img src="${leftColumnImageUrl}" style="width: 100%; height: 100%; object-fit: contain;">` : '<span style="color: rgba(255,255,255,0.5);">Preview Gambar</span>'}
                             </div>
-                            <input type="text" id="left-col-image-url" value="${leftColumnImageUrl}" placeholder="URL Gambar..." style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px; margin-bottom: 8px;">
+                            <input type="text" id="left-col-image-url" value="${leftColumnImageUrl}" placeholder="URL Gambar..." style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px; margin-bottom: 8px;">
                             <input type="file" id="left-col-file" accept="image/*" style="display: none;" onchange="handleLeftColImageUpload(event)">
                             <button onclick="document.getElementById('left-col-file').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 8px; cursor: pointer; font-size: 12px; font-weight: 600;">📁 Upload Gambar Poster</button>
                         </div>
@@ -3432,16 +3432,16 @@ window.updateRotationInterval = function(val) {
                                 ${index >= 2 ? `
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">Nama:</label>
-                                    <input type="text" id="takmir-name-${index}" value="${takmir.name}" placeholder="Nama Takmir" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px;">
+                                    <input type="text" id="takmir-name-${index}" value="${takmir.name}" placeholder="Nama Takmir" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px;">
                                 </div>
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">Jabatan:</label>
-                                    <input type="text" id="takmir-position-${index}" value="${takmir.position}" placeholder="Jabatan" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px;">
+                                    <input type="text" id="takmir-position-${index}" value="${takmir.position}" placeholder="Jabatan" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px;">
                                 </div>
                                 ` : ``}
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">URL Foto:</label>
-                                    <input type="text" id="takmir-photo-${index}" value="${takmir.photoUrl}" placeholder="https://example.com/photo.jpg" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px; margin-bottom: 8px;">
+                                    <input type="text" id="takmir-photo-${index}" value="${takmir.photoUrl}" placeholder="https://example.com/photo.jpg" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px; margin-bottom: 8px;">
                                     <input type="file" id="takmir-upload-${index}" accept="image/*" style="display: none;" onchange="handleImageUpload(${index}, event)">
                                     <button onclick="document.getElementById('takmir-upload-${index}').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 8px; cursor: pointer; font-size: 12px; font-weight: 600;">📁 Upload dari Komputer</button>
                                 </div>
@@ -3538,7 +3538,7 @@ window.updateRotationInterval = function(val) {
                 
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37;">
                     <div style="color: #d4af37; font-weight: 700; margin-bottom: 12px;">💡 Panduan Upload Suara Beep:</div>
-                    <ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">
+                    <ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">
                         <li>Format audio yang didukung: MP3, WAV, OGG, M4A</li>
                         <li>Ukuran file maksimal: <strong>5MB</strong></li>
                         <li>Durasi yang disarankan: <strong>3-10 detik</strong> (suara beep pendek)</li>
@@ -3642,7 +3642,7 @@ window.updateRotationInterval = function(val) {
                 
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37;">
                     <div style="color: #d4af37; font-weight: 700; margin-bottom: 12px;">💡 Panduan Upload Suara Adzan:</div>
-                    <ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">
+                    <ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">
                         <li>Format audio yang didukung: MP3, WAV, OGG, M4A</li>
                         <li>Ukuran file maksimal: <strong>20MB</strong></li>
                         <li>Durasi yang disarankan: <strong>3-5 menit</strong></li>
@@ -4128,7 +4128,7 @@ window.updateRotationInterval = function(val) {
                         </div>
                         
                         <!-- Footer -->
-                        <div style="display: flex; justify-content: space-between; padding: 8px; font-size: 14px; color: #d4af37; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                        <div style="display: flex; justify-content: space-between; padding: 8px; font-size: 9px; color: #d4af37; border-top: 1px solid rgba(255, 255, 255, 0.2);">
                             <div style="text-align: left;">
                                 <div style="font-size: 12px; opacity: 0.8;">Ketua</div>
                                 <div style="font-weight: 700;">${ketua}</div>
@@ -4155,8 +4155,8 @@ window.updateRotationInterval = function(val) {
                 
                 if (isSQ) {
                     infoDiv.innerHTML = `
-                    <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; height: 100%; width: 100%; display: flex; flex-direction: column;">
-                        <div style="opacity: 0.8; font-size: 15px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; text-align: center;">${item.label === 'Jadwal Petugas Jumat' ? 'JADWAL PETUGAS SHOLAT JUMAT' : item.label}</div>
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; height: 100%; width: 100%; display: flex; flex-direction: column;">
+                        <div style="opacity: 0.8; font-size: 10px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; text-align: center;">${item.label === 'Jadwal Petugas Jumat' ? 'JADWAL PETUGAS SHOLAT JUMAT' : item.label}</div>
                         <div style="flex: 1; overflow: hidden; width: 100%; position: relative;">${item.value}</div>
                     </div>
                     `;
@@ -4164,7 +4164,7 @@ window.updateRotationInterval = function(val) {
                 }
 
                 infoDiv.innerHTML = `
-                    <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px;">
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px;">
                         <div style="opacity: 0.8; font-size: ${labelSize}; font-weight: 800; margin-bottom: 2px; text-transform: uppercase; text-align: center;">${item.label}</div>
                         <div style="font-weight: 700; font-size: ${valueSize}; white-space: pre-line; text-align: ${textAlign};">${item.value}</div>
                     </div>
@@ -4181,15 +4181,15 @@ window.updateRotationInterval = function(val) {
                 
                 if (isSQ) {
                     return `
-                    <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; width: 100%; min-height: 200px; display: flex; flex-direction: column;">
-                        <div style="opacity: 0.8; font-size: 15px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; text-align: center;">${item.label === 'Jadwal Petugas Jumat' ? 'JADWAL PETUGAS SHOLAT JUMAT' : item.label}</div>
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; width: 100%; min-height: 200px; display: flex; flex-direction: column;">
+                        <div style="opacity: 0.8; font-size: 10px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; text-align: center;">${item.label === 'Jadwal Petugas Jumat' ? 'JADWAL PETUGAS SHOLAT JUMAT' : item.label}</div>
                         <div style="flex: 1; overflow: hidden; width: 100%; position: relative;">${item.value}</div>
                     </div>
                     `;
                 }
 
                 return `
-                <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px;">
+                <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px;">
                     <div style="opacity: 0.8; font-size: ${labelSize}; font-weight: 800; margin-bottom: 2px; text-transform: uppercase; text-align: center;">${item.label}</div>
                     <div style="font-weight: 700; font-size: ${valueSize}; white-space: pre-line; text-align: ${textAlign};">${item.value}</div>
                 </div>
