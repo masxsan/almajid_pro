@@ -1,4 +1,4 @@
-nn<!doctype html>
+<!doctype html>
 <html lang="id" class="h-full">
  <head>
   <meta charset="UTF-8">
@@ -94,31 +94,6 @@ nn<!doctype html>
             0% { opacity: 0; filter: blur(2px); }
             100% { opacity: 1; filter: none; }
         }
-        
-        /* Gaya untuk menjaga ukuran font tetap konsisten saat fullscreen di Android */
-        :root {
-            --base-font-size: 16px;
-        }
-        
-        /* Mencegah perubahan ukuran font saat fullscreen di Android */
-        html:-webkit-full-screen {
-            text-size-adjust: none;
-            -webkit-text-size-adjust: none;
-            zoom: 1;
-        }
-        
-        html:fullscreen {
-            text-size-adjust: none;
-            -webkit-text-size-adjust: none;
-            zoom: 1;
-        }
-        
-        /* Gaya untuk semua elemen saat fullscreen */
-        
-        
-        
-        
-        
     </style>
     <style>
         /* --- Styles untuk Layar Aktivasi --- */
@@ -199,11 +174,77 @@ nn<!doctype html>
             display: none !important;
         }
     </style>
-  <style>@view-transition { navigation: auto; }</style>
+  <style>
+
+/* ===== RESET ===== */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+/* ===== TOMBOL FULLSCREEN ===== */
+
+#fsBtn {
+
+    position: fixed;
+
+    bottom: 24px;
+
+    right: 24px;
+
+    font-size: 24px; /* Slightly larger for better icon visibility */
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    border: 2px solid #d4af37; /* Gold border to match UI theme */
+
+    background: transparent; /* Fully transparent background */
+
+    color: #d4af37; /* Gold text to match the border */
+
+    cursor: pointer;
+
+    opacity: 1;
+
+    transition: opacity 0.5s ease;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+#fsBtn.hide {
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+</style>
   </head>
  <body class="h-full w-full">
 
     <!-- OVERLAY AKTIVASI (INTEGRASI AL-MAJID) -->
+    
+<button id="fsBtn"
+        onclick="toggleFullScreen(document.documentElement)">
+    &#128439; <!-- Fullscreen Icon -->
+</button>
     <div id="activation-overlay">
         <div class="activation-box">
             <h2>🔐 Aktivasi Perangkat</h2>
@@ -213,10 +254,14 @@ nn<!doctype html>
 
             <div class="act-input-group">
                 <label>Kode Aktivasi</label>
-                <input type="text" id="actCode" class="act-input" placeholder="Masukkan Kode Aktivasi" style="text-transform: uppercase;">
+                <input type="text" id="actCode" class="act-input" placeholder="ALM-XXXX-XXXX" style="text-transform: uppercase;">
             </div>
 
-            
+            <div class="act-input-group">
+                <label>Data Verifikasi (.json)</label>
+                <input type="file" id="actFile" class="act-input" accept=".json" style="padding: 8px; font-size: 0.9em;">
+                <small style="display:block; margin-top:5px; color:#666; font-size:0.8em;">*File didapat dari tombol 'Export Data' di Master App</small>
+            </div>
 
             <button class="act-btn" onclick="processActivation()">AKTIFKAN SEKARANG</button>
             <p id="act-msg" style="color: #ff4444; margin-top: 15px; font-weight: bold;"></p>
@@ -224,70 +269,28 @@ nn<!doctype html>
     </div>
 
     <script>
-        // --- LOGIKA AKTIVASI AL-QUDS---
+        // --- LOGIKA AKTIVASI ---
         (function() {
             const activationOverlay = document.getElementById('activation-overlay');
-            const savedActivation = localStorage.getItem('alqudsActivation');
+            const savedActivation = localStorage.getItem('alMajidActivation');
 
             // Cek Status Aktivasi saat Load
             if (savedActivation) {
                 try {
                     const data = JSON.parse(savedActivation);
-                    if (data && data.code) {
-                        console.log('App Activated:', data.code);
+                    if (data && data.code && data.masjidName) {
+                        console.log('App Activated:', data.masjidName);
                         activationOverlay.classList.add('hidden-overlay');
                     }
                 } catch (e) {
                     console.error('Activation Data Corrupt');
-                    localStorage.removeItem('alqudsActivation');
+                    localStorage.removeItem('alMajidActivation');
                 }
-            }
-            
-            // Fungsi untuk menghitung checksum sesuai dengan algoritma master_alquds.html
-            function calculateChecksum(data) {
-                let sum = 0;
-                for (let i = 0; i < data.length; i++) {
-                    sum += data.charCodeAt(i) * (i + 1);
-                }
-                return sum % 100;
-            }
-            
-            // Fungsi untuk memvalidasi kode aktivasi
-            function validateActivationCode(code) {
-                // Pastikan formatnya ALM-XXXX-XXXX
-                const codePattern = /^ALM-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
-                if (!codePattern.test(code)) {
-                    return false;
-                }
-                
-                // Ekstrak bagian kode tanpa prefix ALM-
-                const codeWithoutPrefix = code.substring(4); // Ambil dari karakter ke-4 sampai akhir
-                const cleanCode = codeWithoutPrefix.replace(/-/g, ''); // Hapus tanda hubung
-                
-                // Ambil 8 karakter dari kode (4+4)
-                if (cleanCode.length !== 8) {
-                    return false;
-                }
-                
-                // Bagian pertama adalah 4 karakter pertama, bagian kedua adalah 4 karakter berikutnya
-                const part1 = cleanCode.substring(0, 4);
-                const part2 = cleanCode.substring(4, 8);
-                
-                // Gabungkan kedua bagian untuk perhitungan checksum
-                const rawCode = part1 + part2;
-                
-                // Hitung checksum dari rawCode
-                const calculatedChecksum = calculateChecksum(rawCode);
-                
-                // Karena kita tidak memiliki checksum asli untuk dibandingkan,
-                // kita hanya bisa memvalidasi format dan struktur.
-                // Dalam implementasi sebenarnya, Anda mungkin ingin menyimpan checksum dalam kode itu sendiri.
-                // Untuk sekarang, kita hanya memastikan bahwa format valid.
-                return true;
             }
 
             window.processActivation = function() {
                 const codeInput = document.getElementById('actCode').value.trim().toUpperCase();
+                const fileInput = document.getElementById('actFile');
                 const msgEl = document.getElementById('act-msg');
 
                 if (!codeInput) {
@@ -295,150 +298,371 @@ nn<!doctype html>
                     return;
                 }
 
-                // Validasi kode aktivasi
-                if (validateActivationCode(codeInput)) {
-                    // Simpan informasi aktivasi
-                    const activationData = {
-                        code: codeInput,
-                        activatedAt: new Date().toISOString()
-                    };
-
-                    localStorage.setItem('alqudsActivation', JSON.stringify(activationData));
-                    
-                    alert(`✅ Aktivasi Berhasil!\nKode: ${codeInput}`);
-                    activationOverlay.classList.add('hidden-overlay');
-                    
-                    // Reload halaman agar bersih
-                    location.reload();
-                } else {
-                    msgEl.textContent = "❌ Kode Aktivasi TIDAK VALID!";
+                if (fileInput.files.length === 0) {
+                    msgEl.textContent = "❌ Upload File Database JSON!";
+                    return;
                 }
+
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    try {
+                        const db = JSON.parse(e.target.result);
+                        
+                        // Cari kode di database
+                        // Karena format mungkin berbeda (array vs object), pastikan ini array
+                        const found = Array.isArray(db) ? db.find(item => item.code === codeInput) : null;
+
+                        if (found) {
+                            if (found.status === 'BLOCKED') {
+                                msgEl.textContent = "⛔ Kode Aktivasi DIBLOKIR!";
+                                return;
+                            }
+
+                            // Aktivasi Berhasil
+                            const activationData = {
+                                code: found.code,
+                                masjidName: found.masjid,
+                                activatedAt: new Date().toISOString()
+                            };
+
+                            localStorage.setItem('alMajidActivation', JSON.stringify(activationData));
+                            
+                            alert(`✅ Aktivasi Berhasil!\nSelamat Datang, ${found.masjid}`);
+                            activationOverlay.classList.add('hidden-overlay');
+                            
+                            // Reload halaman agar bersih
+                            location.reload();
+
+                        } else {
+                            msgEl.textContent = "❌ Kode Aktivasi TIDAK VALID!";
+                        }
+                    } catch (err) {
+                        msgEl.textContent = "❌ File JSON Rusak/Salah!";
+                        console.error(err);
+                    }
+                };
+
+                reader.onerror = function() {
+                    msgEl.textContent = "❌ Gagal membaca file!";
+                };
+
+                reader.readAsText(file);
             }
         })();
     </script>
-    
-    <script>
-(function () {
+    <!-- END OVERLAY AKTIVASI -->
+ <div id="main-container" class="h-full w-full gradient-bg text-white overflow-auto" style="height: 100vh; display: grid; grid-template-rows: 14vh 12vh calc(50vh + 1cm) calc(24vh - 1cm); overflow: hidden;"><!-- Header Banner -->
+   <div id="header-banner" class="gold-border" style="background: linear-gradient(90deg, #1a4d2e 0%, #2d6b42 50%, #1a4d2e 100%); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;"><!-- Jam Digital -->
+    <div style="flex: 1;">
+     <div id="current-time" style="font-size: 36px; font-weight: 800; color: white; letter-spacing: 2px;">
+      00:00:00
+     </div>
+     <div id="current-date" style="font-size: 18px; color: white; margin-top: 2px;">
+      Senin, 1 Januari 2024
+     </div>
+    </div><!-- Nama Masjid -->
+    <div style="flex: 2; text-align: center;">
+     <div id="mosque-name" style="font-size: 35px; font-weight: 800; color: #d4af37; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 4px;">
+      MASJID AL-IKHLAS
+     </div>
+     <div id="mosque-address" style="font-size: 20px; color: white; opacity: 0.9; font-weight: 700;">
+      Jl. Contoh No. 123, Jakarta Selatan
+     </div><button id="open-settings-btn" style="margin-top: 8px; background: rgba(212, 175, 55, 0.2); border: 2px solid #d4af37; border-radius: 50%; width: 36px; height: 36px; color: #d4af37; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center;" onmouseover="this.style.background='#d4af37'; this.style.color='#1a4d2e'; this.style.transform='rotate(90deg)'" onmouseout="this.style.background='rgba(212, 175, 55, 0.2)'; this.style.color='#d4af37'; this.style.transform='rotate(0deg)'">
+      <svg style="width: 20px; height: 20px;" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+      </svg></button>
+    </div><!-- Countdown -->
+    <div style="flex: 1; text-align: right;">
+     <div style="font-size: 11px; color: white; margin-bottom: 2px;">
+      MENUJU
+     </div>
+     <div id="next-prayer-name" style="font-size: 16px; font-weight: 700; color: white;">
+      DZUHUR
+     </div>
+     <div id="countdown" class="pulse" style="font-size: 24px; font-weight: 800; color: #d4af37; margin-top: 2px;">
+      00:00:00
+     </div>
+    </div>
+   </div><!-- Kartu Waktu Sholat -->
+  <div style="padding: 16px 24px; height: 100%; overflow: hidden;">
+    <div id="prayer-cards" style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; min-height: 100px;"><!-- Cards will be inserted here -->
+    </div>
+   </div><!-- Body Tengah (4 Kolom) -->
+  <div id="main-content-grid" style="padding: 0 24px 0 24px; display: grid; grid-template-columns: 0.75fr 0.75fr 2.2fr 1.35fr; gap: 12px; height: 100%; overflow: hidden;"><!-- Kolom Kiri 1+2: Foto Takmir dalam satu kontainer -->
+   <div id="photos-container" style="grid-column: 1 / span 2; background: transparent; border-radius: 12px; padding: 0; border: none; box-shadow: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: calc(100% - 2cm); overflow: hidden;">
+    <div id="left-col-1" style="display: flex; flex-direction: column; gap: 0px; height: 100%; min-height: 0;">
+        <div style="background: transparent; border: none; padding: 0; flex: 1.3; display: flex; flex-direction: column; justify-content: center; box-shadow: none !important; -webkit-box-shadow: none !important; overflow: hidden; min-height: 0;">
+            <div id="takmir-display-1" style="display: flex; flex-direction: column; gap: 10px; height: 100%;"></div>
+        </div>
+        <div id="takmir-display-3" style="flex: 0.7; display: flex; flex-direction: column; gap: 10px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
+    </div><!-- Kolom Kiri 2: Foto Takmir -->
+    <div id="left-col-2" style="display: flex; flex-direction: column; gap: 0px; height: 100%; min-height: 0;">
+        <div style="background: transparent; border: none; padding: 0; flex: 1.3; display: flex; flex-direction: column; justify-content: center; box-shadow: none !important; -webkit-box-shadow: none !important; overflow: hidden; min-height: 0;">
+            <div id="takmir-display-2" style="display: flex; flex-direction: column; gap: 10px; height: 100%;"></div>
+        </div>
+        <div id="takmir-display-4" style="flex: 0.7; display: flex; flex-direction: column; gap: 10px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
+    </div>
+   </div><!-- Kolom Tengah: Slideshow Pengumuman -->
+   <div class="gold-border shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 5px; height: calc(100% - 2cm); display: flex; flex-direction: column; position: relative; overflow: hidden; border: 2px solid #d4af37;">
+     <div id="announcement-title-container" style="display: flex; align-items: center; margin-bottom: 10px;">
+      <svg style="width: 20px; height: 20px; color: #d4af37; margin-right: 8px;" fill="currentColor" viewbox="0 0 20 20"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
+      </svg>
+      <div id="announcement-title" style="font-size: 25px; font-weight: 700; color: #d4af37;">
+       PENGUMUMAN MASJID
+      </div>
+     </div><!-- Text Announcement -->
+     <div id="text-announcement-container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center; overflow: hidden;">
+      <div id="announcement-text" style="font-size: 22.5px; line-height: 1.8; color: white;">
+       ${currentAnnouncement}
+      </div>
+     </div><!-- Slideshow Container -->
+    <div id="slideshow-container" style="flex: 1; position: relative; border-radius: 0; overflow: hidden; background: rgba(0, 0, 0, 0.3); width: 100%; height: 100%; min-height: 0; margin: 0; display: none;"><!-- Slides will be inserted here -->
+     </div><!-- Slide Navigation Dots -->
+     <div id="slide-dots" style="display: none; justify-content: center; gap: 8px; margin-top: 12px;"><!-- Dots will be inserted here -->
+     </div>
+    </div><!-- Kolom Kanan: Info Masjid -->
+   <div class="shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 12px; height: calc(100% - 2cm); overflow: hidden; min-height: 0;">
+     <div style="font-size: 18.75px; font-weight: 700; color: #d4af37; margin-bottom: 10px; text-align: center;">
+           ️ INFO MASJID
+     </div>
+    <div id="info-masjid-display" style="display: flex; flex-direction: column; gap: 8px; font-size: 10px; color: white;">
+      <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
+       <div style="opacity: 0.8; font-size: 7.5px; font-weight: 600; margin-bottom: 2px;">
+        Kapasitas
+       </div>
+       <div style="font-weight: 700; font-size: 7px;">
+        500 Jamaah
+       </div>
+      </div>
+      <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
+       <div style="opacity: 0.8; font-size: 7.5px; font-weight: 600; margin-bottom: 2px;">
+        Fasilitas
+       </div>
+       <div style="font-weight: 700; font-size: 7px;">
+        AC, Parkir
+       </div>
+      </div>
+     
+     <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
+       <div style="opacity: 0.8; font-size: 15px; font-weight: 600; margin-bottom: 2px;">
+        Kontak
+       </div>
+       <div style="font-weight: 700; font-size: 14px;">
+        0812-3456-7890
+       </div>
+      </div>
+      <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
+       <div style="opacity: 0.8; font-size: 15px; font-weight: 600; margin-bottom: 2px;">
+        Info Ramadhan/Raya
+       </div>
+       <div style="font-weight: 700; font-size: 14px;">
+        Kajian Menjelang Berbuka
+       </div>
+      </div>
+      <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
+        <div style="opacity: 0.8; font-size: 15px; font-weight: 600; margin-bottom: 2px;">
+         Info Qurban
+        </div>
+        <div style="font-weight: 700; font-size: 14px;">
+         Sapi: 3, Kambing: 15 (Panitia: Bpk. Ahmad)
+        </div>
+       </div>
+       <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; border-left: 3px solid #d4af37;">
+        <div style="opacity: 0.8; font-size: 15px; font-weight: 600; margin-bottom: 2px;">
+         No. Rekening
+        </div>
+        <div style="font-weight: 700; font-size: 14px;">
+         BSI 1234567890 a.n Masjid Al-Ikhlas
+        </div>
+       </div>
+      </div>
+     </div>
+   </div><!-- Body Bawah (3 Kolom) -->
+  <div style="padding: 0 24px 0 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; height: 100%; margin-top: -60px;"><!-- Donatur -->
+    <div class="gold-border shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 12px; height: calc(75% + 80px); min-height: 0; overflow: hidden; border: 2px solid #d4af37; display: flex; flex-direction: column;">
+     <div style="font-size: 21.875px; font-weight: 700; color: #d4af37; margin-bottom: 2px; text-align: center; flex-shrink: 0;">
+      DONATUR
+     </div>
+     <table style="width: 100%; font-size: 14.0625px; flex-shrink: 0; margin-bottom: 4px; table-layout: fixed;">
+      <thead>
+       <tr style="border-bottom: 2px solid #d4af37;">
+        <th style="padding: 2px; text-align: left; color: #d4af37; width: 65%;">Nama</th>
+        <th style="padding: 2px; text-align: right; color: #d4af37; width: 35%;">Nominal</th>
+       </tr>
+      </thead>
+     </table>
+     <div id="donatur-scroll-container" style="overflow: hidden; position: relative; flex: 1;">
+         <div id="donatur-scroll-content" style="position: absolute; width: 100%;">
+             <table style="width: 100%; font-size: 14.0625px; table-layout: fixed;">
+              <tbody id="donatur-table">
+               <tr class="table-row">
+                <td style="padding: 2px; width: 65%;">Budi Santoso</td>
+                <td style="padding: 2px; text-align: right; width: 35%;">Rp 500.000</td>
+               </tr>
+               <tr class="table-row">
+                <td style="padding: 2px; width: 65%;">Siti Aminah</td>
+                <td style="padding: 2px; text-align: right; width: 35%;">Rp 300.000</td>
+               </tr>
+               <tr class="table-row">
+                <td style="padding: 2px; width: 65%;">Hamba Allah</td>
+                <td style="padding: 2px; text-align: right; width: 35%;">Rp 1.000.000</td>
+               </tr>
+              </tbody>
+             </table>
+         </div>
+     </div>
+    </div><!-- Keuangan -->
+    <div class="gold-border shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 12px; height: calc(75% + 80px); min-height: 0; overflow: hidden; border: 2px solid #d4af37; display: flex; flex-direction: column;">
+     <div style="font-size: 21.875px; font-weight: 700; color: #d4af37; margin-bottom: 2px; text-align: center; flex-shrink: 0;">
+      KEUANGAN MASJID
+     </div>
+     <table style="width: 100%; font-size: 14.0625px; flex-shrink: 0; margin-bottom: 4px; table-layout: fixed;">
+      <thead>
+       <tr style="border-bottom: 2px solid #d4af37;">
+        <th style="padding: 2px; text-align: left; color: #d4af37; width: 60%;">Keterangan</th>
+        <th style="padding: 2px; text-align: right; color: #d4af37; width: 40%;">Jumlah</th>
+       </tr>
+      </thead>
+     </table>
+     <div id="finance-scroll-container" style="overflow: hidden; position: relative; flex: 1;">
+         <div id="finance-scroll-content" style="position: absolute; width: 100%;">
+             <table style="width: 100%; font-size: 14.0625px; table-layout: fixed;">
+                 <tbody id="finance-table">
+                   <tr class="table-row">
+                    <td style="padding: 2px;">Penerimaan</td>
+                    <td style="padding: 2px; text-align: right; font-weight: 600; color: #4ade80;">Rp 2.500.000</td>
+                   </tr>
+                   <tr class="table-row">
+                    <td style="padding: 2px;">Pengeluaran</td>
+                    <td style="padding: 2px; text-align: right; font-weight: 600; color: #f87171;">Rp 1.200.000</td>
+                   </tr>
+                   <tr style="border-top: 2px solid rgba(212, 175, 55, 0.05);">
+                    <td style="padding: 2px; font-weight: 700;">Saldo</td>
+                    <td style="padding: 2px; text-align: right; font-weight: 700; color: #d4af37;">Rp 1.300.000</td>
+                   </tr>
+                 </tbody>
+             </table>
+         </div>
+     </div>
+    </div><!-- Petugas -->
+    <div class="gold-border shadow-custom" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 12px; height: calc(75% + 80px); min-height: 0; overflow: hidden; border: 2px solid #d4af37;">
+     <div style="font-size: 21.875px; font-weight: 700; color: #d4af37; margin-bottom: 2px; text-align: center;">
+      PETUGAS SHOLAT
+     </div>
+     <table style="width: 100%; font-size: 14.0625px;">
+      <thead>
+       <tr style="border-bottom: 2px solid #d4af37;">
+        <th style="padding: 2px; text-align: left; color: #d4af37;">Waktu</th>
+        <th style="padding: 2px; text-align: left; color: #d4af37;">Imam</th>
+        <th style="padding: 2px; text-align: left; color: #d4af37;">Muadzin</th>
+       </tr>
+      </thead>
+      <tbody id="officer-table">
+       <tr class="table-row">
+        <td style="padding: 2px; font-weight: 700; color: #d4af37;">Subuh</td>
+        <td style="padding: 2px;">Ust. Ahmad</td>
+        <td style="padding: 2px;">Budi Santoso</td>
+       </tr>
+       <tr class="table-row">
+        <td style="padding: 2px; font-weight: 700; color: #d4af37;">Dzuhur</td>
+        <td style="padding: 2px;">Ust. Yusuf</td>
+        <td style="padding: 2px;">Hasan Ali</td>
+       </tr>
+       <tr class="table-row">
+        <td style="padding: 2px; font-weight: 700; color: #d4af37;">Ashar</td>
+        <td style="padding: 2px;">Ust. Ibrahim</td>
+        <td style="padding: 2px;">Faisal Rahman</td>
+       </tr>
+       <tr class="table-row">
+        <td style="padding: 2px; font-weight: 700; color: #d4af37;">Maghrib</td>
+        <td style="padding: 2px;">Ust. Umar</td>
+        <td style="padding: 2px;">Ali Akbar</td>
+       </tr>
+       <tr class="table-row">
+        <td style="padding: 2px; font-weight: 700; color: #d4af37;">Isya</td>
+        <td style="padding: 2px;">Ust. Hamzah</td>
+        <td style="padding: 2px;">Ridwan Hakim</td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+   </div><!-- Modal Pengaturan -->
+   <div id="settings-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; overflow-y: auto;">
+    <div style="max-width: 900px; margin: 40px auto; background: #1a4d2e; border: 3px solid #d4af37; border-radius: 20px; padding: 32px;">
+     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 2px solid #d4af37; padding-bottom: 16px;">
+      <h2 style="font-size: 28px; font-weight: 800; color: #d4af37; margin: 0;">⚙️ PANEL PENGATURAN ADMIN</h2><button id="close-modal-btn" style="background: rgba(248, 113, 113, 0.2); border: 2px solid #f87171; border-radius: 8px; padding: 8px 16px; color: #f87171; font-weight: 700; cursor: pointer;" onmouseover="this.style.background='#f87171'; this.style.color='white'" onmouseout="this.style.background='rgba(248, 113, 113, 0.2)'; this.style.color='#f87171'">✕ TUTUP</button>
+     </div><!-- Tabs Navigation -->
+     <div id="tabs-nav" style="display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;"><button class="tab-btn" data-tab="identitas" style="background: #d4af37; color: #1a4d2e; border: none; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Identitas Masjid</button> <button class="tab-btn" data-tab="background" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Template Background</button> <button class="tab-btn" data-tab="waktu" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Waktu Sholat</button> <button class="tab-btn" data-tab="visibility" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Tampilan Waktu</button> <button class="tab-btn" data-tab="mode-pengumuman" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Mode Pengumuman</button> <button class="tab-btn" data-tab="pengumuman-text" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Edit Teks Pengumuman</button> <button class="tab-btn" data-tab="slideshow" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Slideshow Pengumuman</button> <button class="tab-btn" data-tab="info" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Info Masjid</button> <button class="tab-btn" data-tab="donatur" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Donatur</button> <button class="tab-btn" data-tab="keuangan" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Keuangan</button> <button class="tab-btn" data-tab="petugas" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Petugas Sholat</button> <button class="tab-btn" data-tab="takmir" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Foto Takmir</button> <button class="tab-btn" data-tab="audio" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Suara Adzan</button> <button class="tab-btn" data-tab="beep" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Beep Iqomah</button>
+  <button class="tab-btn" data-tab="backup" style="background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid #d4af37; border-radius: 8px; padding: 10px 16px; font-weight: 700; cursor: pointer; transition: all 0.3s;">Backup & Restore</button>
+    </div><!-- Tab Content Container -->
+     <div id="tab-content" style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 24px;"><!-- Content will be dynamically loaded here -->
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            mosque_name: "MASJID AL-IKHLAS",
+            mosque_address: "Jl. Contoh No. 123, Jakarta Selatan",
+            announcement_title: "PENGUMUMAN MASJID",
+            announcement_text: "Kajian rutin setiap hari Jumat pukul 19:30 WIB setelah sholat Maghrib. Mari hadir bersama untuk menambah ilmu agama kita.",
+            primary_color: "#1a4d2e",
+            gold_color: "#d4af37",
+            text_color: "#ffffff",
+            font_family: "Inter"
+        };
 
-  /* ===============================
-     AUTO FONT SCALE (ANDROID + TV)
-  =============================== */
-  const baseWidth = 360;
-  const minScale  = 0.9;
-  const maxScale  = 2.8;
+        let prayerTimes = [
+            { name: "Imsak", time: "04:30", visible: false },
+            { name: "Subuh", time: "04:45", visible: true },
+            { name: "Syuruq", time: "05:55", visible: false },
+            { name: "Dhuha", time: "06:15", visible: false },
+            { name: "Dzuhur", time: "12:05", visible: true },
+            { name: "Ashar", time: "15:20", visible: true },
+            { name: "Maghrib", time: "18:10", visible: true },
+            { name: "Isya", time: "19:25", visible: true }
+        ];
 
-  function applyFontScale() {
-    // Dapatkan lebar layar yang sebenarnya
-    const screenWidth = Math.min(window.screen.width, window.innerWidth) || window.innerWidth;
-    
-    // Untuk perangkat mobile, gunakan innerWidth karena lebih akurat
-    const widthToUse = window.innerWidth;
-    
-    let scale = widthToUse / baseWidth;
-    scale = Math.min(Math.max(scale, minScale), maxScale);
-    document.documentElement.style.fontSize = (16 * scale) + "px";
-    
-    // Juga atur skala kontainer utama untuk konsistensi
-    const mainContainer = document.getElementById('main-container');
-    if (mainContainer) {
-      // Gunakan grid layout yang responsif
-      if (widthToUse <= 768) {
-        // Untuk mobile, gunakan layout khusus
-        mainContainer.style.gridTemplateRows = '14vh 12vh 50vh 24vh';
-      } else {
-        // Untuk desktop, gunakan layout default
-        mainContainer.style.gridTemplateRows = '14vh 12vh calc(50vh + 0.5cm) calc(24vh - 0.5cm)';
-      }
-    }
-  }
+        let infoMasjidData = {
+            capacity: "500 Jamaah",
+            facilities: "AC, Parkir",
+            iqomah: "15 Menit",
+            contact: "0812-3456-7890",
+            ramadhan: "Kajian Menjelang Berbuka",
+            qurban: "Sapi: 3, Kambing: 15 (Panitia: Bpk. Ahmad)",
+            rekening: "BSI 1234567890 a.n Masjid Al-Ikhlas",
+            fridaySchedule: [
+                { date: "12 Januari 2024", imam: "Ust. Abdullah", khotib: "Ust. Abdullah", muadzin: "Bpk. Hasan" },
+                { date: "19 Januari 2024", imam: "Ust. Ibrahim", khotib: "Ust. Ibrahim", muadzin: "Sdr. Ali" }
+            ],
+            fridayKetua: "H. Ahmad Yani",
+            fridaySekertaris: "H. Budi Santoso",
+            shohibulQurban: [
+                { name: "H. Abdullah", animal: "Sapi", count: "1" },
+                { name: "Ibu Siti Aminah", animal: "Kambing", count: "1" },
+                { name: "Bpk. Rahmat & Kel", animal: "Sapi", count: "1" }
+            ]
+        };
 
-  window.addEventListener("resize", applyFontScale);
-  window.addEventListener("orientationchange", applyFontScale);
-  document.addEventListener("DOMContentLoaded", applyFontScale);
-  // Jalankan juga saat halaman selesai dimuat
-  window.addEventListener("load", applyFontScale);
+        let donatorsData = [
+            { name: "Budi Santoso", amount: "500.000" },
+            { name: "Siti Aminah", amount: "300.000" },
+            { name: "Hamba Allah", amount: "1.000.000" },
+            { name: "Ahmad Hidayat", amount: "250.000" },
+            { name: "Nur Aisyah", amount: "150.000" }
+        ];
 
-
-  /* ===============================
-     CREATE FULLSCREEN BUTTON + CSS
-  =============================== */
-  const style = document.createElement("style");
-  style.innerHTML = `
-    #fsBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
-      padding: 10px 14px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 8px;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    #fsBtn.show { opacity: 1; }
-  `;
-  document.head.appendChild(style);
-
-  const fsBtn = document.createElement("button");
-  fsBtn.id = "fsBtn";
-  fsBtn.innerHTML = "⛶";
-  document.body.appendChild(fsBtn);
-
-
-  /* ===============================
-     FULLSCREEN LINTAS BROWSER
-  =============================== */
-  function toggleFullscreen() {
-  if (!document.fullscreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement) {
-
-    const el = document.documentElement;
-    if (el.requestFullscreen) el.requestFullscreen();
-    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-    else if (el.msRequestFullscreen) el.msRequestFullscreen();
-
-  } else {
-    if (document.exitFullscreen) document.exitFullscreen();
-    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-    else if (document.msExitFullscreen) document.msExitFullscreen();
-  }
-}
-
-fsBtn.addEventListener('click', toggleFullscreen);
-
-  /* ===============================
-     VARIABEL UNTUK MENYIMPAN UKURAN ASLI
-  =============================== */
-   {
-    const mainContainer = document.getElementById('main-container');
-    if (mainContainer && originalStyles.mainContainer) {
-      // Kembalikan ukuran asli dari container utama
-      mainContainer.style.height = originalStyles.mainContainer.height;
-      mainContainer.style.gridTemplateRows = originalStyles.mainContainer.gridTemplateRows;
-      mainContainer.style.fontSize = originalStyles.mainContainer.fontSize;
-      mainContainer.style.padding = originalStyles.mainContainer.padding;
-      
-      // Kembalikan ukuran asli dari elemen-elemen penting
-      Object.keys(originalStyles).forEach(selector => {
-        if (selector.startsWith('#')) {
-          const element = document.querySelector(selector);
-          if (element &&) {
-            element.style.fontSize =.fontSize;
-          }
-        }
-      });
-    }
-  }
-  
-  /* ===============================
-     FUNGSI UNTUK MENETAPKAN UKURAN STATIS SAAT FULLSCREEN
-  =============================== */
-   catch (e) {
+        let prayerScheduleData = [];
+        // Load data on startup
+        try {
+            const savedData = localStorage.getItem('prayerScheduleData');
+            if (savedData) {
+                prayerScheduleData = JSON.parse(savedData);
+                // checkDailyUpdate will be called by updateClock or we can call it here if we trust hoisting
+                // setTimeout(() => checkDailyUpdate(), 0); // Safe way
+            }
+        } catch (e) {
             console.error("Error loading schedule:", e);
         }
 
@@ -1066,7 +1290,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                     <div style="font-size: 48px; font-weight: 900; color: white; margin-bottom: 6px; text-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);">${adzanPrayerName.toUpperCase()}</div>
                     <div style="font-size: 18px; color: #d4af37; margin-bottom: 8px; opacity: 0.9;">Mari segera menuju masjid untuk menunaikan sholat berjamaah</div>
                     <div style="width: 80%; height: 3px; background: linear-gradient(90deg, transparent, #d4af37, transparent); margin: 6px 0;"></div>
-                    <div style="font-size: 9px; color: white; opacity: 0.8; font-style: italic;">"Dan dirikanlah sholat, sesungguhnya sholat itu mencegah dari perbuatan keji dan mungkar" (QS. Al-Ankabut: 45)</div>
+                    <div style="font-size: 14px; color: white; opacity: 0.8; font-style: italic;">"Dan dirikanlah sholat, sesungguhnya sholat itu mencegah dari perbuatan keji dan mungkar" (QS. Al-Ankabut: 45)</div>
                     ${adzanAudioUrl ? '<div style="margin-top: 12px; color: #d4af37; font-size: 16px;">     Suara Adzan Sedang Diputar</div>' : ''}
                 </div>
             `;
@@ -1215,7 +1439,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                         <div style="background: transparent; border: none; padding: 0; flex: 1.3; display: flex; flex-direction: column; justify-content: center; box-shadow: none !important; -webkit-box-shadow: none !important; overflow: hidden; min-height: 0;">
                             <div id="takmir-display-1" style="display: flex; flex-direction: column; gap: 10px; height: 100%;"></div>
                         </div>
-                        <div id="takmir-display-3" style="flex: 0.7; display: flex; flex-direction: column; gap: 0px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
+                        <div id="takmir-display-3" style="flex: 0.7; display: flex; flex-direction: column; gap: 10px; justify-content: flex-start; align-items: center; width: 100%; height: 100%;"></div>
                     `;
                 }
             }
@@ -1690,7 +1914,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                 <!-- HOSTING EXPORT -->
                 <div style="background: rgba(26, 77, 46, 0.8); padding: 20px; border-radius: 12px; border: 2px solid #d4af37; margin-bottom: 24px;">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">🌐 Persiapan Hosting (Wajib untuk Upload)</h4>
-                    <p style="color: rgba(255,255,255,0.9); font-size: 9px; margin-bottom: 16px;">
+                    <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-bottom: 16px;">
                         Agar data masjid Anda (Nama, Jadwal, Running Text, dll) tetap tersimpan saat di-upload ke hosting:
                         <br>1. Klik tombol di bawah ini untuk download file <b>masjid_config.json</b>
                         <br>2. Upload file tersebut bersama <b>index.html</b> ke hosting Anda.
@@ -1702,7 +1926,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
 
                 <div style="background: rgba(212, 175, 55, 0.1); padding: 20px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.5); margin-bottom: 24px;">
                     <h4 style="color: white; font-size: 16px; margin-bottom: 12px; font-weight: 700;">⬇️ Download Backup (Untuk PC Lain)</h4>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 9px; margin-bottom: 16px;">
+                    <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 16px;">
                         Simpan data sebagai backup pribadi. Format nama file ada tanggalnya.
                     </p>
                     <button onclick="downloadBackup()" style="background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 1px solid #d4af37; border-radius: 8px; padding: 8px 16px; font-weight: 700; cursor: pointer;">
@@ -1712,7 +1936,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
 
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; border: 2px dashed rgba(212, 175, 55, 0.5);">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">⬆️ Restore Data dari File</h4>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 9px; margin-bottom: 16px;">
+                    <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 16px;">
                         Kembalikan pengaturan dari file backup atau config.
                     </p>
                     <input type="file" id="restore-upload" accept=".json" style="display: none;" onchange="handleRestoreUpload(event)">
@@ -1906,7 +2130,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
         function renderBackgroundTab() {
             return `
                 <h3 style="color: #d4af37; font-size: 20px; margin-bottom: 16px;">🎨 Pilih Template Background</h3>
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 9px; margin-bottom: 20px;">
+                <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px;">
                     Pilih jenis background yang ingin ditampilkan di layar utama:
                 </div>
                 
@@ -1943,7 +2167,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                 
                 <div style="margin-top: 20px; padding: 16px; background: rgba(212, 175, 55, 0.1); border-left: 4px solid #d4af37; border-radius: 6px;">
                     <div style="color: #d4af37; font-weight: 700; margin-bottom: 8px;">💡 Tips:</div>
-                    <ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">
+                    <ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">
                         <li><strong>Warna Solid:</strong> Cocok untuk tampilan yang simpel dan elegan</li>
                         <li><strong>Gradasi:</strong> Memberikan kesan modern dengan perpaduan 2 warna</li>
                         <li><strong>Gambar:</strong> Gunakan foto masjid atau motif islami sebagai background</li>
@@ -2006,7 +2230,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                             <label style="display: block; color: white; margin-bottom: 8px; font-weight: 600;">URL Gambar:</label>
                             <input type="text" id="bg-image-url" value="${backgroundSettings.imageUrl}" placeholder="https://example.com/image.jpg" style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 16px; margin-bottom: 8px;">
                             <input type="file" id="bg-image-upload" accept="image/*" style="display: none;" onchange="handleBgImageUpload(event)">
-                            <button onclick="document.getElementById('bg-image-upload').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 10px; cursor: pointer; font-size: 9px; font-weight: 600;">   Upload dari Komputer</button>
+                            <button onclick="document.getElementById('bg-image-upload').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 10px; cursor: pointer; font-size: 14px; font-weight: 600;">   Upload dari Komputer</button>
                         </div>
                         <div>
                             <label style="display: block; color: white; margin-bottom: 8px; font-weight: 600;">Transparansi Gambar: <span id="opacity-display" style="color: #d4af37;">${Math.round(backgroundSettings.imageOpacity * 100)}%</span></label>
@@ -2197,7 +2421,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                 <div style="background: rgba(212, 175, 55, 0.1); padding: 16px; border-radius: 8px; border: 1px dashed #d4af37; margin-bottom: 24px;">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">📂 Import Jadwal Excel (Otomatis)</h4>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                        <button onclick="downloadTemplate()" style="background: #1a4d2e; color: #d4af37; border: 1px solid #d4af37; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 9px;">
+                        <button onclick="downloadTemplate()" style="background: #1a4d2e; color: #d4af37; border: 1px solid #d4af37; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;">
                             📥 Download Template
                         </button>
                         <input type="file" id="excel-upload" accept=".xlsx, .xls" style="color: white;">
@@ -2228,7 +2452,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
 
         function renderVisibilityTab() {
             let html = '<h3 style="color: #d4af37; font-size: 20px; margin-bottom: 16px;">👁️ Atur Tampilan Waktu Sholat</h3>';
-            html += '<div style="color: rgba(255, 255, 255, 0.7); font-size: 9px; margin-bottom: 20px;">Pilih waktu sholat mana yang ingin ditampilkan di layar utama:</div>';
+            html += '<div style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px;">Pilih waktu sholat mana yang ingin ditampilkan di layar utama:</div>';
             html += '<div style="display: flex; flex-direction: column; gap: 12px;">';
             
             prayerTimes.forEach((prayer, index) => {
@@ -2238,10 +2462,10 @@ fsBtn.addEventListener('click', toggleFullscreen);
                             <div style="font-size: 32px;">${prayer.visible ? '✅' : '⬜'}</div>
                             <div>
                                 <div style="color: ${prayer.visible ? '#d4af37' : 'white'}; font-weight: 700; font-size: 18px; margin-bottom: 4px;">${prayer.name}</div>
-                                <div style="color: ${prayer.visible ? '#d4af37' : 'rgba(255, 255, 255, 0.6)'}; font-size: 9px;">${prayer.time}</div>
+                                <div style="color: ${prayer.visible ? '#d4af37' : 'rgba(255, 255, 255, 0.6)'}; font-size: 14px;">${prayer.time}</div>
                             </div>
                         </div>
-                        <div style="background: ${prayer.visible ? '#d4af37' : 'rgba(255, 255, 255, 0.2)'}; color: ${prayer.visible ? '#1a4d2e' : 'white'}; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 9px;">
+                        <div style="background: ${prayer.visible ? '#d4af37' : 'rgba(255, 255, 255, 0.2)'}; color: ${prayer.visible ? '#1a4d2e' : 'white'}; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 14px;">
                             ${prayer.visible ? 'TAMPILKAN' : 'SEMBUNYIKAN'}
                         </div>
                     </div>
@@ -2251,7 +2475,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
             html += '</div>';
             html += '<div style="margin-top: 20px; padding: 16px; background: rgba(212, 175, 55, 0.1); border-left: 4px solid #d4af37; border-radius: 6px;">';
             html += '<div style="color: #d4af37; font-weight: 700; margin-bottom: 8px;">💡 Tips:</div>';
-            html += '<ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">';
+            html += '<ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">';
             html += '<li><strong>Imsak, Syuruq, Dhuha:</strong> Waktu-waktu ini bisa disembunyikan jika tidak diperlukan</li>';
             html += '<li><strong>Subuh, Dzuhur, Ashar, Maghrib, Isya:</strong> Waktu sholat wajib yang biasanya ditampilkan</li>';
             html += '<li>Klik pada kotak untuk mengubah status tampilan</li>';
@@ -2433,7 +2657,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
         function renderModePengumumanTab() {
             return `
                 <h3 style="color: #d4af37; font-size: 20px; margin-bottom: 16px;">🎨 Pilih Mode Tampilan Pengumuman</h3>
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 9px; margin-bottom: 20px;">
+                <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 20px;">
                     Pilih bagaimana Anda ingin menampilkan pengumuman di layar utama:
                 </div>
                 
@@ -2442,7 +2666,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                     <div onclick="selectAnnouncementMode('text')" style="background: ${announcementMode === 'text' ? 'linear-gradient(135deg, #d4af37 0%, #c9a636 100%)' : 'rgba(255, 255, 255, 0.05)'}; border: 3px solid ${announcementMode === 'text' ? '#d4af37' : 'rgba(212, 175, 55, 0.3)'}; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.3s; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 12px;">📝</div>
                         <h4 style="color: ${announcementMode === 'text' ? '#1a4d2e' : '#d4af37'}; font-size: 18px; margin-bottom: 8px; font-weight: 800;">MODE TEKS</h4>
-                        <p style="color: ${announcementMode === 'text' ? '#1a4d2e' : 'white'}; font-size: 9px; line-height: 1.6; opacity: 0.9;">Tampilkan pengumuman dalam bentuk teks yang mudah dibaca</p>
+                        <p style="color: ${announcementMode === 'text' ? '#1a4d2e' : 'white'}; font-size: 14px; line-height: 1.6; opacity: 0.9;">Tampilkan pengumuman dalam bentuk teks yang mudah dibaca</p>
                         ${announcementMode === 'text' ? '<div style="margin-top: 12px; background: #1a4d2e; color: #d4af37; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 12px;">✓ AKTIF SEKARANG</div>' : ''}
                     </div>
                     
@@ -2450,7 +2674,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                     <div onclick="selectAnnouncementMode('slideshow')" style="background: ${announcementMode === 'slideshow' ? 'linear-gradient(135deg, #d4af37 0%, #c9a636 100%)' : 'rgba(255, 255, 255, 0.05)'}; border: 3px solid ${announcementMode === 'slideshow' ? '#d4af37' : 'rgba(212, 175, 55, 0.3)'}; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.3s; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 12px;">🖼️</div>
                         <h4 style="color: ${announcementMode === 'slideshow' ? '#1a4d2e' : '#d4af37'}; font-size: 18px; margin-bottom: 8px; font-weight: 800;">MODE SLIDESHOW</h4>
-                        <p style="color: ${announcementMode === 'slideshow' ? '#1a4d2e' : 'white'}; font-size: 9px; line-height: 1.6; opacity: 0.9;">Tampilkan pengumuman dalam bentuk gambar slideshow otomatis</p>
+                        <p style="color: ${announcementMode === 'slideshow' ? '#1a4d2e' : 'white'}; font-size: 14px; line-height: 1.6; opacity: 0.9;">Tampilkan pengumuman dalam bentuk gambar slideshow otomatis</p>
                         ${announcementMode === 'slideshow' ? '<div style="margin-top: 12px; background: #1a4d2e; color: #d4af37; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 12px;">✓ AKTIF SEKARANG</div>' : ''}
                     </div>
 
@@ -2458,7 +2682,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                     <div onclick="selectAnnouncementMode('rotate')" style="background: ${announcementMode === 'rotate' ? 'linear-gradient(135deg, #d4af37 0%, #c9a636 100%)' : 'rgba(255, 255, 255, 0.05)'}; border: 3px solid ${announcementMode === 'rotate' ? '#d4af37' : 'rgba(212, 175, 55, 0.3)'}; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.3s; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 12px;">🔄</div>
                         <h4 style="color: ${announcementMode === 'rotate' ? '#1a4d2e' : '#d4af37'}; font-size: 18px; margin-bottom: 8px; font-weight: 800;">MODE ROTASI</h4>
-                        <p style="color: ${announcementMode === 'rotate' ? '#1a4d2e' : 'white'}; font-size: 9px; line-height: 1.6; opacity: 0.9;">Bergantian menampilkan Teks dan Slideshow secara otomatis</p>
+                        <p style="color: ${announcementMode === 'rotate' ? '#1a4d2e' : 'white'}; font-size: 14px; line-height: 1.6; opacity: 0.9;">Bergantian menampilkan Teks dan Slideshow secara otomatis</p>
                         ${announcementMode === 'rotate' ? '<div style="margin-top: 12px; background: #1a4d2e; color: #d4af37; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 12px;">✓ AKTIF SEKARANG</div>' : ''}
                     </div>
                 </div>
@@ -2468,7 +2692,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                 <div style="margin-top: 24px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">⚙️ Pengaturan Rotasi</h4>
                     <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <label style="color: white; font-size: 9px;">Durasi Tampil (Detik):</label>
+                        <label style="color: white; font-size: 14px;">Durasi Tampil (Detik):</label>
                         <div style="display: flex; gap: 12px; align-items: center;">
                             <input type="number" id="rotate-interval" value="${announcementRotationIntervalSec}" min="5" max="300" 
                                 onchange="updateRotationInterval(this.value)"
@@ -2483,13 +2707,13 @@ fsBtn.addEventListener('click', toggleFullscreen);
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">📣 Notifikasi Khutbah Jumat</h4>
                     <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end;">
                         <div>
-                            <label style="color: white; font-size: 9px;">Detik sebelum khutbah:</label>
+                            <label style="color: white; font-size: 14px;">Detik sebelum khutbah:</label>
                             <input type="number" id="friday-pre-seconds" value="${Math.max(0, parseInt(fridayNotifPreSeconds) || 0)}" min="0" max="3600"
                                 onchange="updateFridayNotifPreSeconds(this.value)"
                                 style="background: rgba(0,0,0,0.3); border: 1px solid #d4af37; color: white; padding: 8px 12px; border-radius: 6px; width: 120px;">
                         </div>
                         <div>
-                            <label style="color: white; font-size: 9px;">Durasi tampil selama khutbah (Menit):</label>
+                            <label style="color: white; font-size: 14px;">Durasi tampil selama khutbah (Menit):</label>
                             <input type="number" id="friday-post-minutes" value="${Math.max(1, parseInt(fridayNotifPostMinutes) || 1)}" min="1" max="180"
                                 onchange="updateFridayNotifPostMinutes(this.value)"
                                 style="background: rgba(0,0,0,0.3); border: 1px solid #d4af37; color: white; padding: 8px 12px; border-radius: 6px; width: 140px;">
@@ -2503,7 +2727,7 @@ fsBtn.addEventListener('click', toggleFullscreen);
                 
                 <div style="margin-top: 24px; padding: 16px; background: rgba(212, 175, 55, 0.1); border-left: 4px solid #d4af37; border-radius: 6px;">
                     <div style="color: #d4af37; font-weight: 700; margin-bottom: 8px;">💡 Tips:</div>
-                    <ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">
+                    <ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">
                         <li><strong>Mode Teks:</strong> Cocok untuk pengumuman singkat dan penting yang perlu dibaca dengan cepat</li>
                         <li><strong>Mode Slideshow:</strong> Cocok untuk pengumuman bergambar, event, atau informasi visual yang menarik</li>
                         <li><strong>Mode Rotasi:</strong> Menggabungkan keduanya agar jamaah mendapatkan semua informasi secara bergantian</li>
@@ -2601,11 +2825,11 @@ window.updateRotationInterval = function(val) {
                             <div style="display: flex; flex-direction: column; gap: 10px;">
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">Keterangan:</label>
-                                    <input type="text" id="slide-caption-${index}" value="${slide.caption}" placeholder="Keterangan slide" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px;">
+                                    <input type="text" id="slide-caption-${index}" value="${slide.caption}" placeholder="Keterangan slide" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px;">
                                 </div>
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">URL Gambar:</label>
-                                    <input type="text" id="slide-url-${index}" value="${slide.imageUrl}" placeholder="https://example.com/image.jpg" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px; margin-bottom: 8px;">
+                                    <input type="text" id="slide-url-${index}" value="${slide.imageUrl}" placeholder="https://example.com/image.jpg" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px; margin-bottom: 8px;">
                                     <input type="file" id="slide-upload-${index}" accept="image/*" style="display: none;" onchange="handleSlideUpload(${index}, event)">
                                     <button onclick="document.getElementById('slide-upload-${index}').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 8px; cursor: pointer; font-size: 12px; font-weight: 600;">📁 Upload dari Komputer</button>
                                 </div>
@@ -2775,17 +2999,17 @@ window.updateRotationInterval = function(val) {
                         <label style="display: block; color: white; margin-bottom: 8px; font-weight: 600;">Jadwal Petugas Jumat:</label>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                             <div>
-                                <label style="display: block; color: white; margin-bottom: 6px; font-size: 9px;">Nama Ketua:</label>
+                                <label style="display: block; color: white; margin-bottom: 6px; font-size: 14px;">Nama Ketua:</label>
                                 <input type="text" id="edit-friday-ketua" value="${infoMasjidData.fridayKetua || ''}" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white;">
                             </div>
                             <div>
-                                <label style="display: block; color: white; margin-bottom: 6px; font-size: 9px;">Nama Sekertaris:</label>
+                                <label style="display: block; color: white; margin-bottom: 6px; font-size: 14px;">Nama Sekertaris:</label>
                                 <input type="text" id="edit-friday-sekertaris" value="${infoMasjidData.fridaySekertaris || ''}" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white;">
                             </div>
                         </div>
                         
                         <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
-                            <label style="display: block; color: #d4af37; margin-bottom: 8px; font-weight: 600; font-size: 9px;">Daftar Jadwal (Hari/Tanggal | Imam | Khotib | Muadzin)</label>
+                            <label style="display: block; color: #d4af37; margin-bottom: 8px; font-weight: 600; font-size: 14px;">Daftar Jadwal (Hari/Tanggal | Imam | Khotib | Muadzin)</label>
                             <div id="friday-schedule-container">
                                 ${(infoMasjidData.fridaySchedule || []).map((item, idx) => `
                                     <div class="friday-row" style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr auto; gap: 8px; margin-bottom: 8px;">
@@ -2827,7 +3051,7 @@ window.updateRotationInterval = function(val) {
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <input type="range" id="info-rotate-interval" min="3" max="60" value="${infoRotateIntervalSec}" oninput="document.getElementById('info-rotate-interval-num').value=this.value" style="flex: 1;">
                             <input type="number" id="info-rotate-interval-num" min="3" max="60" value="${infoRotateIntervalSec}" oninput="document.getElementById('info-rotate-interval').value=this.value" style="width: 50px; padding: 4px; border-radius: 4px; border: 1px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; text-align: center;">
-                            <span style="color: white; font-size: 9px;">dtk</span>
+                            <span style="color: white; font-size: 14px;">dtk</span>
                         </div>
                     </div>
                 </div>
@@ -3053,7 +3277,7 @@ window.updateRotationInterval = function(val) {
                 <div style="background: rgba(212, 175, 55, 0.1); padding: 16px; border-radius: 8px; border: 1px dashed #d4af37; margin-bottom: 24px;">
                     <h4 style="color: #d4af37; font-size: 16px; margin-bottom: 12px; font-weight: 700;">📂 Import Data Donatur (Excel)</h4>
                     <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                        <button onclick="downloadDonaturTemplate()" style="background: #1a4d2e; color: #d4af37; border: 1px solid #d4af37; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 9px;">
+                        <button onclick="downloadDonaturTemplate()" style="background: #1a4d2e; color: #d4af37; border: 1px solid #d4af37; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;">
                             📥 Download Template
                         </button>
                         <input type="file" id="donatur-excel-upload" accept=".xlsx, .xls" style="color: white;">
@@ -3229,7 +3453,7 @@ window.updateRotationInterval = function(val) {
 
                     <!-- Rotation Settings -->
                     <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(212, 175, 55, 0.3);">
-                         <label style="display: block; color: white; margin-bottom: 8px; font-size: 9px; font-weight: 600;">⏱️ Interval Rotasi (Jika > 2 foto):</label>
+                         <label style="display: block; color: white; margin-bottom: 8px; font-size: 14px; font-weight: 600;">⏱️ Interval Rotasi (Jika > 2 foto):</label>
                          <div style="display: flex; gap: 12px; align-items: center;">
                             <input type="number" id="takmir-rotate-interval" value="${takmirRotationInterval}" min="5" max="300" style="background: rgba(0,0,0,0.3); border: 1px solid #d4af37; color: white; padding: 8px 12px; border-radius: 6px; width: 100px;">
                             <span style="color: rgba(255,255,255,0.6); font-size: 13px;">detik</span>
@@ -3241,7 +3465,7 @@ window.updateRotationInterval = function(val) {
                              <div class="preview-box" style="width: 100%; height: 200px; border-radius: 8px; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; border: 2px dashed #d4af37; overflow: hidden; margin-bottom: 8px;">
                                 ${leftColumnImageUrl ? `<img src="${leftColumnImageUrl}" style="width: 100%; height: 100%; object-fit: contain;">` : '<span style="color: rgba(255,255,255,0.5);">Preview Gambar</span>'}
                             </div>
-                            <input type="text" id="left-col-image-url" value="${leftColumnImageUrl}" placeholder="URL Gambar..." style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px; margin-bottom: 8px;">
+                            <input type="text" id="left-col-image-url" value="${leftColumnImageUrl}" placeholder="URL Gambar..." style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px; margin-bottom: 8px;">
                             <input type="file" id="left-col-file" accept="image/*" style="display: none;" onchange="handleLeftColImageUpload(event)">
                             <button onclick="document.getElementById('left-col-file').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 8px; cursor: pointer; font-size: 12px; font-weight: 600;">📁 Upload Gambar Poster</button>
                         </div>
@@ -3269,16 +3493,16 @@ window.updateRotationInterval = function(val) {
                                 ${index >= 2 ? `
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">Nama:</label>
-                                    <input type="text" id="takmir-name-${index}" value="${takmir.name}" placeholder="Nama Takmir" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px;">
+                                    <input type="text" id="takmir-name-${index}" value="${takmir.name}" placeholder="Nama Takmir" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px;">
                                 </div>
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">Jabatan:</label>
-                                    <input type="text" id="takmir-position-${index}" value="${takmir.position}" placeholder="Jabatan" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px;">
+                                    <input type="text" id="takmir-position-${index}" value="${takmir.position}" placeholder="Jabatan" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px;">
                                 </div>
                                 ` : ``}
                                 <div>
                                     <label style="display: block; color: white; margin-bottom: 4px; font-size: 12px; font-weight: 600;">URL Foto:</label>
-                                    <input type="text" id="takmir-photo-${index}" value="${takmir.photoUrl}" placeholder="https://example.com/photo.jpg" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 9px; margin-bottom: 8px;">
+                                    <input type="text" id="takmir-photo-${index}" value="${takmir.photoUrl}" placeholder="https://example.com/photo.jpg" style="width: 100%; padding: 8px; border-radius: 6px; border: 2px solid #d4af37; background: rgba(255, 255, 255, 0.1); color: white; font-size: 14px; margin-bottom: 8px;">
                                     <input type="file" id="takmir-upload-${index}" accept="image/*" style="display: none;" onchange="handleImageUpload(${index}, event)">
                                     <button onclick="document.getElementById('takmir-upload-${index}').click()" style="width: 100%; background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 2px solid #d4af37; border-radius: 6px; padding: 8px; cursor: pointer; font-size: 12px; font-weight: 600;">📁 Upload dari Komputer</button>
                                 </div>
@@ -3375,7 +3599,7 @@ window.updateRotationInterval = function(val) {
                 
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37;">
                     <div style="color: #d4af37; font-weight: 700; margin-bottom: 12px;">💡 Panduan Upload Suara Beep:</div>
-                    <ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">
+                    <ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">
                         <li>Format audio yang didukung: MP3, WAV, OGG, M4A</li>
                         <li>Ukuran file maksimal: <strong>5MB</strong></li>
                         <li>Durasi yang disarankan: <strong>3-10 detik</strong> (suara beep pendek)</li>
@@ -3479,7 +3703,7 @@ window.updateRotationInterval = function(val) {
                 
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37;">
                     <div style="color: #d4af37; font-weight: 700; margin-bottom: 12px;">💡 Panduan Upload Suara Adzan:</div>
-                    <ul style="color: white; font-size: 9px; line-height: 1.8; margin-left: 20px;">
+                    <ul style="color: white; font-size: 14px; line-height: 1.8; margin-left: 20px;">
                         <li>Format audio yang didukung: MP3, WAV, OGG, M4A</li>
                         <li>Ukuran file maksimal: <strong>20MB</strong></li>
                         <li>Durasi yang disarankan: <strong>3-5 menit</strong></li>
@@ -3965,7 +4189,7 @@ window.updateRotationInterval = function(val) {
                         </div>
                         
                         <!-- Footer -->
-                        <div style="display: flex; justify-content: space-between; padding: 8px; font-size: 9px; color: #d4af37; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                        <div style="display: flex; justify-content: space-between; padding: 8px; font-size: 14px; color: #d4af37; border-top: 1px solid rgba(255, 255, 255, 0.2);">
                             <div style="text-align: left;">
                                 <div style="font-size: 12px; opacity: 0.8;">Ketua</div>
                                 <div style="font-weight: 700;">${ketua}</div>
@@ -3992,8 +4216,8 @@ window.updateRotationInterval = function(val) {
                 
                 if (isSQ) {
                     infoDiv.innerHTML = `
-                    <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; height: 100%; width: 100%; display: flex; flex-direction: column;">
-                        <div style="opacity: 0.8; font-size: 10px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; text-align: center;">${item.label === 'Jadwal Petugas Jumat' ? 'JADWAL PETUGAS SHOLAT JUMAT' : item.label}</div>
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; height: 100%; width: 100%; display: flex; flex-direction: column;">
+                        <div style="opacity: 0.8; font-size: 15px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; text-align: center;">${item.label === 'Jadwal Petugas Jumat' ? 'JADWAL PETUGAS SHOLAT JUMAT' : item.label}</div>
                         <div style="flex: 1; overflow: hidden; width: 100%; position: relative;">${item.value}</div>
                     </div>
                     `;
@@ -4001,7 +4225,7 @@ window.updateRotationInterval = function(val) {
                 }
 
                 infoDiv.innerHTML = `
-                    <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px;">
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px;">
                         <div style="opacity: 0.8; font-size: ${labelSize}; font-weight: 800; margin-bottom: 2px; text-transform: uppercase; text-align: center;">${item.label}</div>
                         <div style="font-weight: 700; font-size: ${valueSize}; white-space: pre-line; text-align: ${textAlign};">${item.value}</div>
                     </div>
@@ -4018,15 +4242,15 @@ window.updateRotationInterval = function(val) {
                 
                 if (isSQ) {
                     return `
-                    <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px; width: 100%; min-height: 200px; display: flex; flex-direction: column;">
-                        <div style="opacity: 0.8; font-size: 10px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; text-align: center;">${item.label === 'Jadwal Petugas Jumat' ? 'JADWAL PETUGAS SHOLAT JUMAT' : item.label}</div>
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px; width: 100%; min-height: 200px; display: flex; flex-direction: column;">
+                        <div style="opacity: 0.8; font-size: 15px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; text-align: center;">${item.label === 'Jadwal Petugas Jumat' ? 'JADWAL PETUGAS SHOLAT JUMAT' : item.label}</div>
                         <div style="flex: 1; overflow: hidden; width: 100%; position: relative;">${item.value}</div>
                     </div>
                     `;
                 }
 
                 return `
-                <div style="background: rgba(212, 175, 55, 0.1); padding: 1px; border-radius: 1px;">
+                <div style="background: rgba(212, 175, 55, 0.1); padding: 6px; border-radius: 6px;">
                     <div style="opacity: 0.8; font-size: ${labelSize}; font-weight: 800; margin-bottom: 2px; text-transform: uppercase; text-align: center;">${item.label}</div>
                     <div style="font-weight: 700; font-size: ${valueSize}; white-space: pre-line; text-align: ${textAlign};">${item.value}</div>
                 </div>
@@ -4207,6 +4431,80 @@ window.updateRotationInterval = function(val) {
             }, 1000);
         });
     </script>
+    
+<script>
+// Check if fullscreen functionality is already defined to prevent redeclaration
+if (typeof hideTimer === 'undefined') {
+/* ==============================
+   FULLSCREEN (LINTAS BROWSER)
+============================== */
+function isFullScreen() {
+    return document.fullscreenElement ||
+           document.webkitFullscreenElement ||
+           document.mozFullScreenElement ||
+           document.msFullscreenElement;
+}
+
+
+function requestFullScreen(el) {
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+}
+
+
+function exitFullScreen() {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
+}
+
+
+function toggleFullScreen(el) {
+    if (isFullScreen()) exitFullScreen();
+    else requestFullScreen(el);
+}
+
+
+
+/* ==============================
+   AUTO HIDE TOMBOL FULLSCREEN
+============================== */
+let hideTimer = null;
+const fsBtn = document.getElementById("fsBtn");
+
+
+function showButton() {
+    if (!fsBtn) return;
+    fsBtn.classList.remove("hide");
+    if (hideTimer) {
+        clearTimeout(hideTimer);
+    }
+    hideTimer = setTimeout(() => {
+        fsBtn.classList.add("hide");
+    }, 5000); // 5 detik tanpa aktivitas
+}
+
+
+/* Deteksi aktivitas */
+["mousemove", "keydown", "touchstart"].forEach(event => {
+    document.addEventListener(event, showButton);
+});
+
+
+/* Saat awal */
+showButton();
+}
+</script>
+</body>
+</html>
+                <tr style="border-top: 2px solid #d4af37;">
+                    <td style="padding: 4px; font-weight: 700;">Saldo Saat Ini</td>
+                    <td style="padding: 4px; text-align: right; font-weight: 700; color: #d4af37;">Rp ${balance.toLocaleString('id-ID')}</td>
+                </tr>
+            `;
             
             tbody.innerHTML = content;
 
@@ -4287,92 +4585,71 @@ window.updateRotationInterval = function(val) {
         });
     </script>
     
-    <!-- Fullscreen Button -->
-    <button id="fsBtn"
-            onclick="toggleFullScreen(document.documentElement)">
-        FULLSCREEN
-    </button>
-    
-    <script>
-    /* ==============================
-       FULLSCREEN (LINTAS BROWSER)
-    ============================== */
-    function isFullScreen() {
-        return document.fullscreenElement ||
-               document.webkitFullscreenElement ||
-               document.mozFullScreenElement ||
-               document.msFullscreenElement;
-    }
-    
-    function requestFullScreen(el) {
-        if (el.requestFullscreen) el.requestFullscreen();
-        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
-        else if (el.msRequestFullscreen) el.msRequestFullscreen();
-    }
-    
-    function exitFullScreen() {
-        if (document.exitFullscreen) document.exitFullscreen();
-        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
-        else if (document.msExitFullscreen) document.msExitFullscreen();
-    }
-    
-    function toggleFullScreen(el) {
-        if (isFullScreen()) exitFullScreen();
-        else requestFullScreen(el);
-    }
-    
-    
-    /* ==============================
-       AUTO HIDE TOMBOL FULLSCREEN
-    ============================== */
-    let hideTimer;
-    const fsBtn = document.getElementById("fsBtn");
-    
-    function showButton() {
-        fsBtn.classList.remove("hide");
+<script>
+// Check if fullscreen functionality is already defined to prevent redeclaration
+if (typeof hideTimer === 'undefined') {
+/* ==============================
+   FULLSCREEN (LINTAS BROWSER)
+============================== */
+function isFullScreen() {
+    return document.fullscreenElement ||
+           document.webkitFullscreenElement ||
+           document.mozFullScreenElement ||
+           document.msFullscreenElement;
+}
+
+
+function requestFullScreen(el) {
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+}
+
+
+function exitFullScreen() {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
+}
+
+
+function toggleFullScreen(el) {
+    if (isFullScreen()) exitFullScreen();
+    else requestFullScreen(el);
+}
+
+
+
+/* ==============================
+   AUTO HIDE TOMBOL FULLSCREEN
+============================== */
+let hideTimer = null;
+const fsBtn = document.getElementById("fsBtn");
+
+
+function showButton() {
+    if (!fsBtn) return;
+    fsBtn.classList.remove("hide");
+    if (hideTimer) {
         clearTimeout(hideTimer);
-        hideTimer = setTimeout(() => {
-            fsBtn.classList.add("hide");
-        }, 5000); // 5 detik tanpa aktivitas
     }
-    
-    /* Deteksi aktivitas */
-    ["mousemove", "keydown", "touchstart"].forEach(event => {
-        document.addEventListener(event, showButton);
-    });
-    
-    /* Saat awal */
-    showButton();
-    </script>
-    <style>
-    #fsBtn {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        font-size: 22px;
-        padding: 14px 22px;
-        border-radius: 14px;
-        border: none;
-        background: #00c853;
-        color: #000;
-        cursor: pointer;
-        opacity: 1;
-        transition: opacity 0.5s ease;
-        z-index: 9999;
-    }
-    
-    #fsBtn.hide {
-        opacity: 0;
-        pointer-events: none;
-    }
-    </style>
+    hideTimer = setTimeout(() => {
+        fsBtn.classList.add("hide");
+    }, 5000); // 5 detik tanpa aktivitas
+}
+
+
+/* Deteksi aktivitas */
+["mousemove", "keydown", "touchstart"].forEach(event => {
+    document.addEventListener(event, showButton);
+});
+
+
+/* Saat awal */
+showButton();
+}
+</script>
 </body>
 </html>
-
-
-
-
-
-
