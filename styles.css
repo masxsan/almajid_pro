@@ -1,0 +1,1062 @@
+/* Reset dan Pengaturan Umum */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.4;
+    color: #ffcc02;
+    background-color: #1b5e20;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main Body Layout */
+.main-body {
+    display: grid;
+    grid-template-columns: 1fr 2.25fr 1fr; /* Kiri: 1, Tengah: 2.25 (25% lebih lebar dari 2x), Kanan: 1 */
+    gap: clamp(0.3rem, 1.5vw, 1rem);
+    padding-top: 0.1rem;
+    padding-right: clamp(0.3rem, 1vw, 0.7rem);
+    padding-bottom: clamp(0.1rem, 0.5vw, 0.3rem);
+    padding-left: clamp(0.3rem, 1vw, 0.7rem);
+    flex: 1;
+    min-height: 0;
+    background-color: #000000;
+}
+
+/* Header Utama */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: white;
+    padding: clamp(0.3rem, 1vw, 0.7rem);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    font-size: clamp(0.8em, 1.5vw, 1em);
+}
+
+.header-left, .header-right {
+    flex: 1;
+    text-align: center;
+}
+
+.header-center {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+.masjid-text {
+    text-align: center;
+}
+
+.current-time {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: bold;
+    color: #ffcc02;
+}
+
+.countdown {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: #ffcc02;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    font-weight: bold;
+}
+
+.masjid-name {
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: bold;
+    color: #ffcc02;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.logo-container img {
+    width: clamp(50px, 8vw, 70px);
+    height: clamp(50px, 8vw, 70px);
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Section Waktu Sholat */
+.prayer-times-section {
+    background-color: #000000;
+    padding: clamp(0.3rem, 1vw, 0.7rem);
+    margin-bottom: 0.05rem;
+}
+
+/* Gaya teks kuning emas */
+.gold-text {
+    color: #ffcc02;
+}
+
+/* Warna kontainer hijau muda */
+.light-green-bg {
+    background-color: #e3f2fd;
+}
+
+/* Warna kontainer hijau tua */
+.dark-green-bg {
+    background-color: #1b5e20;
+}
+
+/* Warna teks countdown dan nama waktu sholat berikutnya */
+.next-prayer-name {
+    color: #ffcc02;
+}
+
+.prayer-times-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(60px, 10vw, 120px), 1fr));
+    gap: clamp(0.1rem, 0.5vw, 0.3rem);
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.prayer-card {
+    background: #333333;
+    border-radius: clamp(6px, 1.5vw, 10px);
+    padding: clamp(0.3rem, 1vw, 0.6rem);
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    color: #ffcc02;
+    border: 1px solid #ffcc02;
+}
+
+.prayer-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.prayer-label {
+    font-size: 0.85rem;
+    color: #ffcc02;
+    margin-bottom: 0.2rem;
+    font-weight: bold;
+}
+
+.prayer-time {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffcc02;
+}
+
+/* Sisi Tengah - Carousel */
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.carousel-container-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: flex-start;
+}
+
+.carousel-container {
+    width: 100%;
+    max-width: 95%;
+    height: 40vh;
+    min-height: 300px;
+    margin: 0 auto 5px auto;
+}
+
+/* Kontainer Ayat Alquran */
+.quran-verse-section {
+    background-color: transparent;
+    padding: clamp(0.1rem, 0.5vw, 0.3rem);
+    margin: 0.05rem 0;
+    width: 100%;
+}
+
+.quran-verse-container {
+    position: relative;
+    width: 100%;
+    max-width: 95%;
+    margin: 0 auto;
+    height: auto;
+    min-height: 150px;
+}
+
+.quran-verse-item {
+    display: none;
+    text-align: center;
+    padding: 1rem;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.quran-verse-item.active {
+    display: block;
+}
+
+.quran-arabic {
+    font-size: 1.5rem;
+    font-family: 'Scheherazade New', 'Arabic Transparent', Arial, sans-serif;
+    line-height: 2.5;
+    color: #ffcc02;
+    margin-bottom: 0.1rem;
+    direction: rtl;
+    text-align: center;
+}
+
+.quran-translation {
+    font-size: 1rem;
+    color: #ffcc02;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.verse-reference {
+    font-size: 0.9rem;
+    color: #9e9e9e;
+    font-style: italic;
+    text-align: right;
+}
+
+/* Adjust layout for when carousel is between prayer times and main content */
+@media screen and (min-width: 1025px) {
+    .center-content {
+        max-width: 95%;
+        margin: 0.2rem auto;
+    }
+    
+    .main-body {
+        margin-top: 0.3rem;
+    }
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 40vh; /* Use viewport height for responsiveness */
+    min-height: 300px; /* Minimum height */
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.carousel-slide {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.carousel-slide.active {
+    display: block;
+    opacity: 1;
+    z-index: 1;
+}
+
+.carousel-slide.fade-out {
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.5rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: white;
+}
+
+/* Sisi Kiri */
+.side-left {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.3rem, 1vw, 0.7rem);
+    width: 100%;
+}
+
+/* Sisi Kanan */
+.side-right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.3rem, 1vw, 0.7rem);
+    width: 100%;
+}
+
+/* Table container */
+.table-container {
+    overflow-x: auto;
+    margin: 0.5rem 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Individual Announcement Sections */
+.ramadan-info-section, .qurban-info-section, .jumat-schedule-section, .bank-account-section, .qris-section {
+    background: #1b5e20;
+    padding: clamp(0.15rem, 0.5vw, 0.35rem); /* Dikurangi 50% dari sebelumnya */
+    border-radius: clamp(3px, 0.75vw, 5px); /* Dikurangi 50% dari sebelumnya */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 0.25rem; /* Dikurangi 50% dari sebelumnya */
+    color: #ffcc02;
+}
+
+.ramadan-info-section h3, .qurban-info-section h3, .jumat-schedule-section h3, .bank-account-section h3, .qris-section h3 {
+    color: #ffcc02;
+    margin: 0 0 0.25rem 0; /* Dikurangi 50% dari sebelumnya */
+    font-size: 1.2rem; /* Diperbesar dari sebelumnya (0.5rem -> 1.2rem) */
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.1rem; /* Dikurangi 50% dari sebelumnya */
+}
+
+.qurban-info-section h4 {
+    color: #ffcc02;
+    margin: 0.8rem 0 0.3rem 0;
+    font-size: 1.2rem; /* Diubah agar sama dengan ukuran Info Qurban (dari 0.9rem menjadi 1.2rem) */
+}
+
+.qurban-summary {
+    background-color: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
+.qurban-summary p {
+    margin: 0.3rem 0;
+    font-size: 0.85rem;
+    color: #ffcc02;
+}
+
+.bank-account-details {
+    background-color: #e8f5e9;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
+.bank-account-details p {
+    margin: 0.4rem 0;
+    font-size: 1.03rem; /* 10% lebih besar dari sebelumnya (0.94rem * 1.1) */
+    color: #1b5e20;
+}
+
+.qris-image {
+    text-align: center;
+    padding: 0.25rem; /* Dikurangi 50% dari sebelumnya */
+}
+
+.qris-image img {
+    max-width: 130px; /* Ditingkatkan 10% dari sebelumnya (118px -> 130px) */
+    height: auto;
+    max-height: 130px; /* Ditingkatkan 10% dari sebelumnya (118px -> 130px) */
+}
+
+.qris-placeholder {
+    display: inline-block;
+    width: 130px; /* Ditingkatkan 10% dari sebelumnya (118px -> 130px) */
+    height: 130px; /* Ditingkatkan 10% dari sebelumnya (118px -> 130px) */
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 130px; /* Ditingkatkan 10% dari sebelumnya (118px -> 130px) */
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: bold;
+}
+
+
+/* Responsive table styles */
+.ramadan-table, .qurban-table, .jumat-schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem; /* Diubah menjadi 75% dari sekarang (dari 1rem menjadi 0.75rem) */
+}
+
+.ramadan-table th, .qurban-table th, .jumat-schedule-table th,
+.ramadan-table td, .qurban-table td, .jumat-schedule-table td {
+    padding: 0.4rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #ffcc02;
+}
+
+.ramadan-table th, .qurban-table th, .jumat-schedule-table th {
+    background-color: #424242;
+    color: #ffcc02;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.ramadan-table tr:hover, .qurban-table tr:hover, .jumat-schedule-table tr:hover {
+    background-color: #f5f5f5;
+    color: #ffcc02;
+}
+
+.donation-table, .finance-table, .staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem; /* Diubah menjadi 75% dari sekarang (dari 1rem menjadi 0.75rem) */
+    color: #ffcc02;
+}
+
+.donation-table th, .donation-table td,
+.finance-table th, .finance-table td,
+.staff-table th, .staff-table td {
+    padding: 0.2rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #ffcc02;
+}
+
+.donation-table th, .finance-table th, .staff-table th {
+    background-color: #424242;
+    color: #ffcc02;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.donation-table tr:hover, .finance-table tr:hover, .staff-table tr:hover {
+    background-color: #e0e0e0;
+    color: #ffcc02;
+}
+
+/* Footer */
+.main-footer {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: white;
+    padding: clamp(0.3rem, 1vw, 0.7rem);
+    margin-top: clamp(0.1rem, 0.5vw, 0.3rem);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Membuat tiga kolom untuk donatur, keuangan, dan petugas */
+    gap: clamp(0.5rem, 1vw, 1rem);
+}
+
+.footer-column {
+    background: #1b5e20;
+    color: #ffcc02;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.footer-column h3 {
+    color: #ffcc02;
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.2rem;
+}
+
+/* Responsif untuk Tablet */
+@media screen and (max-width: 1024px) {
+    .main-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .header-left, .header-right {
+        text-align: center;
+    }
+    
+    .masjid-text {
+        text-align: center;
+    }
+    
+    .current-time {
+        font-size: 1.5rem;
+    }
+    
+    .masjid-name {
+        font-size: 1.5rem;
+    }
+    
+    .main-body {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .side-left, .center-content, .side-right {
+        width: 100%;
+    }
+    
+    .photo-stack {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr); /* Di tablet, jadikan 2 kolom */
+    }
+    
+    /* Adjust carousel for tablet view */
+    .carousel-container {
+        height: 35vh;
+        min-height: 250px;
+    }
+}
+
+/* Responsif untuk Mobile */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .main-header {
+        padding: 0.8rem;
+    }
+    
+    .header-center {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .logo-container img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .current-time {
+        font-size: 1.3rem;
+    }
+    
+    .masjid-name {
+        font-size: 1.3rem;
+    }
+    
+    .countdown {
+        font-size: 1.2rem;
+    }
+    
+    .prayer-times-container {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 0.3rem;
+    }
+    
+    .prayer-time {
+        font-size: 1rem;
+    }
+    
+    .photo-stack {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .top-photo, .bottom-photo {
+        flex: 1;
+    }
+    
+    .table-container {
+        font-size: 0.7rem;
+    }
+    
+    .donation-table, .finance-table, .staff-table {
+        font-size: 0.7rem;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr; /* Di mobile, kembali ke 1 kolom */
+    }
+}
+
+/* Responsif untuk Mobile Sangat Kecil */
+@media screen and (max-width: 480px) {
+    .main-header {
+        padding: 0.5rem;
+    }
+    
+    .current-time {
+        font-size: 1.1rem;
+    }
+    
+    .masjid-name {
+        font-size: 1.1rem;
+    }
+    
+    .countdown {
+        font-size: 1rem;
+    }
+    
+    .prayer-times-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .photo-stack {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .table-container {
+        font-size: 0.6rem;
+    }
+    
+    .donation-table, .finance-table, .staff-table {
+        font-size: 0.6rem;
+    }
+}
+
+/* Animasi */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.prayer-card {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Untuk layar sentuh - ukuran tombol dan font yang ramah sentuhan */
+button, .dot {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+}
+
+/* Scrollbar kustom untuk tampilan yang lebih baik di berbagai platform */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Untuk Firefox */
+* {
+    scrollbar-width: thin;
+}
+
+/* Mode gelap opsional */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    
+    .prayer-times-section {
+        background-color: #1e1e1e;
+    }
+    
+    .prayer-card {
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+    
+    .info-section, .announcement-section, .event-section {
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+}
+
+/* Photo Container Styling */
+.photo-container {
+    width: 100%; /* Dibuat tetap 100% untuk menjaga proporsi dalam kontainer */
+    height: auto;
+    overflow: hidden;
+    border-radius: 4px; /* Dikurangi 50% dari sebelumnya (8px -> 4px) */
+    box-shadow: 0 1px 2.5px rgba(0,0,0,0.1); /* Dikurangi 50% dari sebelumnya */
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-container img {
+    width: 100%;
+    height: auto;
+    max-height: 100px; /* Dikurangi 50% dari sebelumnya (200px -> 100px) */
+    object-fit: contain;
+    display: block;
+}
+
+.top-photo {
+    order: 1;
+}
+
+.bottom-photo {
+    order: 2;
+}
+
+/* Admin Modal Styles */
+.admin-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.admin-btn:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.admin-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.admin-modal-content {
+    background-color: white;
+    position: absolute;
+    top: 50px; /* Posisi tetap di atas (50px dari atas) */
+    left: 50%;
+    transform: translateX(-50%); /* Tetap di tengah secara horizontal */
+    width: 90%;
+    max-width: 1200px;
+    max-height: calc(100vh - 70px); /* Sisa ruang dari atas ke bawah */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255, 0.2);
+}
+
+.admin-modal-header {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: white;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255, 0.1);
+}
+
+.admin-modal-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.admin-close {
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: white;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    line-height: 1;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255, 0.1);
+}
+
+.admin-close:hover {
+    background: rgba(255,255,255, 0.3);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.admin-modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+    background-color: #f9f9f9;
+}
+
+.admin-tabs {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    background-color: white;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    padding: 0 0.5rem;
+}
+
+.admin-tab-btn {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-size: 1.1rem; /* Diperbesar dari sebelumnya (1rem -> 1.1rem) */
+    font-weight: 500;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    position: relative;
+}
+
+.admin-tab-btn:hover {
+    color: #2e7d32;
+    background-color: #f0f8ff;
+}
+
+.admin-tab-btn.active {
+    border-bottom: 3px solid #2e7d32;
+    color: #2e7d32;
+    font-weight: 600;
+    background-color: #e8f5e9;
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+    font-size: 1.05rem; /* Diperbesar dari sebelumnya (0.95rem -> 1.05rem) */
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+}
+
+.admin-save-btn, .admin-add-btn {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.05rem; /* Diperbesar dari sebelumnya (0.95rem -> 1.05rem) */
+    font-weight: 500;
+    margin-right: 0.7rem;
+    margin-bottom: 0.7rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.admin-save-btn:hover, .admin-add-btn:hover {
+    background: linear-gradient(135deg, #1b5e20, #0d3e13);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.admin-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.admin-section h4 {
+    color: #2e7d32;
+    margin: 0 0 1.2rem 0;
+    font-size: 1.2rem; /* Diperbesar dari sebelumnya (1.1rem -> 1.2rem) */
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e8f5e9;
+}
+
+/* Form Grid for Prayer Times */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Admin Row - untuk form dengan tombol aksi di sisi kanan */
+.admin-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    transition: box-shadow 0.3s ease;
+}
+
+.admin-row:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.admin-row input {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.admin-row input[type="number"] {
+    width: 100px;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto; /* Memindahkan tombol ke sisi kanan */
+}
+
+.status-select {
+    padding: 0.4rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.admin-delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease;
+}
+
+.admin-delete-btn:hover {
+    background-color: #c82333;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2e7d32;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
