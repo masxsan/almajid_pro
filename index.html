@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Display Masjid</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header/Banner Utama -->
+    <header class="main-header">
+        <div class="header-left">
+            <div id="current-time" class="current-time">00:00:00</div>
+            <div id="current-date" class="current-date">Senin, 01 Januari 2024</div>
+            <div id="hijri-date" class="hijri-date">1 Muharram 1445 H</div>
+        </div>
+        
+        <div class="header-center">
+            <div class="masjid-text">
+                <h1 id="masjid-name" class="masjid-name">Masjid Al-Muttaqin</h1>
+                <p id="masjid-address" class="masjid-address">Jl. Raya No. 123, Jakarta Selatan</p>
+                <div class="admin-controls">
+                    <button id="admin-btn" class="admin-btn" title="Kelola Konten">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <div class="next-prayer-label">Menuju Waktu Sholat</div>
+            <div id="countdown" class="countdown">00:00:00</div>
+            <div id="next-prayer-name" class="next-prayer-name">Subuh</div>
+        </div>
+    </header>
+
+    <!-- Kartu Waktu Sholat -->
+    <section class="prayer-times-section">
+        <div class="prayer-times-container">
+            <div id="imsak-card" class="prayer-card">
+                <div class="prayer-label">Imsak</div>
+                <div id="imsak-time" class="prayer-time">04:30</div>
+            </div>
+            <div id="subuh-card" class="prayer-card">
+                <div class="prayer-label">Subuh</div>
+                <div id="subuh-time" class="prayer-time">04:45</div>
+            </div>
+            <div id="syuruq-card" class="prayer-card">
+                <div class="prayer-label">Syuruq</div>
+                <div id="syuruq-time" class="prayer-time">06:00</div>
+            </div>
+            <div id="dhuha-card" class="prayer-card">
+                <div class="prayer-label">Dhuha</div>
+                <div id="dhuha-time" class="prayer-time">07:30</div>
+            </div>
+            <div id="dhuhur-card" class="prayer-card">
+                <div class="prayer-label">Dhuhur</div>
+                <div id="dhuhur-time" class="prayer-time">12:00</div>
+            </div>
+            <div id="ashar-card" class="prayer-card">
+                <div class="prayer-label">Ashar</div>
+                <div id="ashar-time" class="prayer-time">15:30</div>
+            </div>
+            <div id="maghrib-card" class="prayer-card">
+                <div class="prayer-label">Maghrib</div>
+                <div id="maghrib-time" class="prayer-time">18:00</div>
+            </div>
+            <div id="isya-card" class="prayer-card">
+                <div class="prayer-label">Isya</div>
+                <div id="isya-time" class="prayer-time">19:30</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Body Utama -->
+    <main class="main-body">
+        <!-- Kontainer Kiri - Foto dan Logo -->
+        <aside class="side-left">
+            
+            <!-- QRIS container (moved to left column, below photo) -->
+            <div class="qris-section">
+                <h3>QRIS (QR Code Indonesian Standard)</h3>
+                <div class="qris-image">
+                    <img id="qris-code-img" src="asset/qris.PNG" alt="QRIS Code" class="qris-code-img">
+                </div>
+            </div>
+            
+            <!-- Nomor Rekening Masjid (dipindahkan dari kolom kanan) -->
+            <div class="bank-account-section">
+                <h3>Nomor Rekening Masjid</h3>
+                <div class="bank-account-details">
+                    <p><strong>Nama Bank:</strong> <span id="bank-name-display">Bank Syariah Indonesia</span></p>
+                    <p><strong>Nomor Rekening:</strong> <span id="account-number-display">1234567890</span></p>
+                    <p><strong>Atas Nama:</strong> <span id="account-name-display">Masjid Al-Muttaqin</span></p>
+                </div>
+            </div>
+            
+            <!-- Daftar Donatur (dipindahkan dari footer ke kolom kiri) -->
+            <div class="donation-list-section">
+                <h3>Daftar Donatur</h3>
+                <div class="table-container">
+                    <table class="donation-table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Tanggal</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+
+            
+
+        </aside>
+        
+        <!-- Kontainer Tengah - Carousel Slide -->
+        <section class="center-content">
+            <div class="carousel-container-wrapper">
+                <div class="carousel-container">
+                    <div class="carousel">
+                        <div class="carousel-slide active">
+                            <img src="asset/slide/masjid1.jpg" alt="Slide 1">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="asset/slide/masjid2.jpg" alt="Slide 2">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="asset/slide/masjid3.jpg" alt="Slide 3">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="asset/slide/masjid4.jpg" alt="Slide 4">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="asset/slide/masjid5.jpg" alt="Slide 5">
+                        </div>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-slide="0" onclick="goToSlide(0)"></span>
+                            <span class="dot" data-slide="1" onclick="goToSlide(1)"></span>
+                            <span class="dot" data-slide="2" onclick="goToSlide(2)"></span>
+                            <span class="dot" data-slide="3" onclick="goToSlide(3)"></span>
+                            <span class="dot" data-slide="4" onclick="goToSlide(4)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kontainer Ayat Alquran -->
+            <section class="quran-verse-section">
+                <div class="quran-verse-container">
+                    <div class="quran-verse-item active">
+                        <div class="quran-arabic">"يٰٓاَيُّهَا الَّذِيْنَ اٰمَنُوا اسْتَعِيْنُوْا بِالصَّبْرِ وَالصَّلٰوةِ ۗاِنَّ اللّٰهَ مَعَ الصّٰبِرِيْنَ"</div>
+                        <div class="quran-translation-container">
+                            <div class="quran-translation">"Wahai orang-orang yang beriman! Mohonlah pertolongan (kepada Allah) dengan sabar dan salat. Sungguh, Allah beserta orang-orang yang sabar."</div>
+                            <div class="verse-reference">(QS. Al-Baqarah: 153)</div>
+                        </div>
+                </div>
+                <div class="quran-verse-item">
+                    <div class="quran-arabic">"وَعَدَ اللّٰهُ الَّذِيْنَ اٰمَنُوْا مِنْكُمْ وَعَمِلُوا الصّٰلِحٰتِ لَيَسْتَخْلِفَنَّهُمْ فِى الْاَرْثِ كَمَا اسْتَخْلَفَ الَّذِيْنَ مِنْ قَبْلِهِمْ"</div>
+                    <div class="quran-translation-container">
+                        <div class="quran-translation">"Allah telah berjanji kepada orang-orang yang beriman di antaramu dan mengerjakan kebajikan, bahwa Dia sungguh-sungguh akan menjadikan mereka khalifah di bumi, sebagaimana Dia telah menjadikan orang-orang sebelum mereka khalifah."</div>
+                        <div class="verse-reference">(QS. An-Nur: 55)</div>
+                    </div>
+                </div>
+                <div class="quran-verse-item">
+                    <div class="quran-arabic">"اِنَّ سَعْيَكُمْ لَشَتٰى"</div>
+                    <div class="quran-translation-container">
+                        <div class="quran-translation">"Sungguh, usaha kamu beraneka ragam."</div>
+                        <div class="verse-reference">(QS. Al-Lail: 4)</div>
+                    </div>
+                </div>
+                <div class="quran-verse-item">
+                    <div class="quran-arabic">"فَاِذَا فَرَغْتَ فَانْصَبْۙ"</div>
+                    <div class="quran-translation-container">
+                        <div class="quran-translation">"Maka apabila engkau telah selesai (dari suatu urusan), kerjakanlah dengan sungguh-sungguh (urusan) yang lain."</div>
+                        <div class="verse-reference">(QS. Al-Insyirah: 7)</div>
+                    </div>
+                </div>
+                <div class="quran-verse-item">
+                    <div class="quran-arabic">"وَجَعَلْنَا مِنْهُمْ اٖئِمَّةً يَّهْدُوْنَ بِاَمْرِنَا لَمَّا صَبَرُوْاۗ وَكَانُوْا بِاٰيٰتِنَا يُوْقِنُوْنَ"</div>
+                    <div class="quran-translation-container">
+                        <div class="quran-translation">"Dan Kami jadikan di antara mereka pemimpin-pemimpin yang memberi petunjuk dengan perintah Kami ketika mereka sabar. Dan mereka meyakini ayat-ayat Kami."</div>
+                        <div class="verse-reference">(QS. As-Sajdah: 24)</div>
+                    </div>
+                </div>
+            </div>
+            </section>
+        </section>
+        
+        <!-- Kontainer Kanan -->
+        <aside class="side-right">
+            <div class="right-content-container">
+                <div class="info-section">
+                    <h3>Informasi Masjid</h3>
+                    <p id="masjid-info">Masjid Al-Muttaqin adalah tempat ibadah umat muslim yang didirikan pada tahun 1995. Terletak di pusat kota Jakarta Selatan.</p>
+                </div>
+                
+                <div class="ramadan-info-section">
+                    <h3>Info Ramadhan / Idul Fitri</h3>
+                    <div class="table-container">
+                        <table class="ramadan-table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Tanggal / Waktu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                
+                
+                
+
+            </div>
+        </aside>
+    </main>
+
+    <!-- Footer Konten -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <!-- Sisi Kiri - Keuangan -->
+            <div class="footer-column">
+                <h3>Keuangan Masjid</h3>
+                <div class="table-container">
+                    <table class="finance-table">
+                        <thead>
+                            <tr>
+                                <th>Jenis</th>
+                                <th>Masuk</th>
+                                <th>Keluar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sisi Tengah - Petugas -->
+            <div class="footer-column">
+                <h3>Petugas Sholat</h3>
+                <div class="table-container staff-table-container">
+                    <div class="staff-table-fixed-header">
+                        <table class="staff-table">
+                            <thead>
+                                <tr>
+                                    <th>Hari</th>
+                                    <th>Imam</th>
+                                    <th>Muadzin</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="staff-table-auto-scroll">
+                        <table class="staff-table">
+                            <tbody>
+                                <!-- Content will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sisi Kanan - Jadwal Petugas Jumat -->
+            <div class="footer-column">
+                <h3>Jadwal Petugas Jumat</h3>
+                <div class="table-container">
+                    <table class="jumat-schedule-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Hari & Tanggal</th>
+                                <th>Nama Imam</th>
+                                <th>Nama Khotib</th>
+                                <th>Nama Muadzin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal untuk pengelolaan konten -->
+    <div id="admin-modal" class="admin-modal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h2>Panel Pengelolaan Konten</h2>
+                <span class="admin-close" id="admin-close">&times;</span>
+            </div>
+            <div class="admin-modal-body">
+                <div style="margin-bottom: 15px; display: flex; justify-content: flex-end;">
+                    <button id="reset-all-data" class="admin-reset-btn" style="background: #f44336; color: white; border: none; border-radius: 6px; padding: 8px 16px; font-weight: 600; cursor: pointer; margin-right: 10px;">Reset Semua Data</button>
+                </div>
+                <div class="admin-tabs">
+                    <button class="admin-tab-btn active" data-tab="general">Umum</button>
+                    <button class="admin-tab-btn" data-tab="prayer-times">Waktu Sholat</button>
+                    <button class="admin-tab-btn" data-tab="photos">Foto & Slide</button>
+                    <button class="admin-tab-btn" data-tab="qris">QRIS</button>
+                    <button class="admin-tab-btn" data-tab="ramadan">Info Ramadhan</button>
+
+                    <button class="admin-tab-btn" data-tab="jumat">Jadwal Jumat</button>
+                    <button class="admin-tab-btn" data-tab="rekening">Rekening</button>
+                    <button class="admin-tab-btn" data-tab="donasi">Donasi & Keuangan</button>
+                    <button class="admin-tab-btn" data-tab="petugas">Petugas Sholat</button>
+                    <button class="admin-tab-btn" data-tab="visibility">Visibilitas Kontainer</button>
+
+                </div>
+                
+                <div class="admin-tab-content">
+                    <!-- Tab Umum -->
+                    <div id="general" class="tab-pane active">
+                        <h3>Edit Informasi Umum</h3>
+                        <div class="form-group">
+                            <label for="masjid-name-input">Nama Masjid:</label>
+                            <input type="text" id="masjid-name-input" value="Masjid Al-Muttaqin">
+                        </div>
+                        <div class="form-group">
+                            <label for="masjid-address-input">Alamat Masjid:</label>
+                            <input type="text" id="masjid-address-input" value="Jl. Raya No. 123, Jakarta Selatan">
+                        </div>
+                        <div class="form-group">
+                            <label for="masjid-info-input">Informasi Masjid:</label>
+                            <textarea id="masjid-info-input">Masjid Al-Muttaqin adalah tempat ibadah umat muslim yang didirikan pada tahun 1995. Terletak di pusat kota Jakarta Selatan.</textarea>
+                        </div>
+                        <button id="save-general" class="admin-save-btn">Simpan Perubahan</button>
+                    </div>
+                    
+                    <!-- Tab Waktu Sholat -->
+                    <div id="prayer-times" class="tab-pane">
+                        <h3>Edit Waktu Sholat</h3>
+                        <div class="form-group">
+                            <label for="imsak-time-input">Imsak:</label>
+                            <input type="time" id="imsak-time-input" value="04:30">
+                            <label for="imsak-visibility" style="display: inline-block; margin-left: 15px;">
+                                <input type="checkbox" id="imsak-visibility" checked> Tampilkan
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="subuh-time-input">Subuh:</label>
+                            <input type="time" id="subuh-time-input" value="04:45">
+                            <label for="subuh-visibility" style="display: inline-block; margin-left: 15px;">
+                                <input type="checkbox" id="subuh-visibility" checked> Tampilkan
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="syuruq-time-input">Syuruq:</label>
+                            <input type="time" id="syuruq-time-input" value="06:00">
+                            <label for="syuruq-visibility" style="display: inline-block; margin-left: 15px;">
+                                <input type="checkbox" id="syuruq-visibility" checked> Tampilkan
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="dhuha-time-input">Dhuha:</label>
+                            <input type="time" id="dhuha-time-input" value="07:30">
+                            <label for="dhuha-visibility" style="display: inline-block; margin-left: 15px;">
+                                <input type="checkbox" id="dhuha-visibility" checked> Tampilkan
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="dhuhur-time-input">Dhuhur:</label>
+                            <input type="time" id="dhuhur-time-input" value="12:00">
+                            <label for="dhuhur-visibility" style="display: inline-block; margin-left: 15px;">
+                                <input type="checkbox" id="dhuhur-visibility" checked> Tampilkan
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="ashar-time-input">Ashar:</label>
+                            <input type="time" id="ashar-time-input" value="15:30">
+                            <label for="ashar-visibility" style="display: inline-block; margin-left: 15px;">
+                                <input type="checkbox" id="ashar-visibility" checked> Tampilkan
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="maghrib-time-input">Maghrib:</label>
+                            <input type="time" id="maghrib-time-input" value="18:00">
+                            <label for="maghrib-visibility" style="display: inline-block; margin-left: 15px;">
+                                <input type="checkbox" id="maghrib-visibility" checked> Tampilkan
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="isya-time-input">Isya:</label>
+                            <input type="time" id="isya-time-input" value="19:30">
+                            <label for="isya-visibility" style="display: inline-block; margin-left: 15px;">
+                                <input type="checkbox" id="isya-visibility" checked> Tampilkan
+                            </label>
+                        </div>
+                        <button id="save-prayer-times" class="admin-save-btn">Simpan Waktu Sholat</button>
+                    </div>
+                    
+                    <!-- Tab Foto & Slide -->
+                    <div id="photos" class="tab-pane">
+                        <h3>Kelola Foto & Slide</h3>
+                        <div class="admin-section">
+                            <h4>Slide Carousel</h4>
+                            <div id="slides-container">
+                                <!-- Slides will be added dynamically -->
+                            </div>
+                            <button id="add-slide" class="admin-add-btn">Tambah Slide</button>
+                            <button id="save-slides" class="admin-save-btn">Simpan Slide</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab QRIS -->
+                    <div id="qris" class="tab-pane">
+                        <h3>Kelola QRIS</h3>
+                        <div class="admin-section">
+                            <h4>Upload Gambar QRIS</h4>
+                            <div class="form-group">
+                                <label for="qris-upload">Pilih Gambar QRIS:</label>
+                                <input type="file" id="qris-upload" accept="image/*" style="display: none;">
+                                <button type="button" class="admin-add-btn" onclick="document.getElementById('qris-upload').click()">📁 Pilih Gambar dari Komputer</button>
+                                <div class="form-group" style="margin-top: 10px;">
+                                    <label>Pratinjau QRIS:</label>
+                                    <div style="text-align: center; margin-top: 10px;">
+                                        <img id="qris-preview" src="asset/qris.PNG" alt="Pratinjau QRIS" style="max-width: 200px; max-height: 200px; border: 2px solid #ccc; border-radius: 8px; display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="save-qris" class="admin-save-btn">Simpan QRIS</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab Info Ramadhan -->
+                    <div id="ramadan" class="tab-pane">
+                        <h3>Kelola Info Ramadhan / Idul Fitri</h3>
+                        <div id="ramadan-events-container">
+                            <!-- Events akan ditambahkan secara dinamis -->
+                        </div>
+                        <button id="add-ramadan-event" class="admin-add-btn">Tambah Kegiatan</button>
+                        <button id="save-ramadan" class="admin-save-btn">Simpan Kegiatan</button>
+                    </div>
+                    
+
+                    
+                    <!-- Tab Jadwal Jumat -->
+                    <div id="jumat" class="tab-pane">
+                        <h3>Kelola Jadwal Petugas Jumat</h3>
+                        <div id="jumat-container">
+                            <!-- Jadwal jumat akan ditambahkan secara dinamis -->
+                        </div>
+                        <button id="add-jumat" class="admin-add-btn">Tambah Jadwal</button>
+                        <button id="save-jumat" class="admin-save-btn">Simpan Jadwal</button>
+                    </div>
+                    
+                    <!-- Tab Rekening -->
+                    <div id="rekening" class="tab-pane">
+                        <h3>Kelola Nomor Rekening Masjid</h3>
+                        <div class="form-group">
+                            <label for="bank-name">Nama Bank:</label>
+                            <input type="text" id="bank-name" placeholder="Nama Bank">
+                        </div>
+                        <div class="form-group">
+                            <label for="account-number">Nomor Rekening:</label>
+                            <input type="text" id="account-number" placeholder="Nomor Rekening">
+                        </div>
+                        <div class="form-group">
+                            <label for="account-name">Atas Nama:</label>
+                            <input type="text" id="account-name" placeholder="Atas Nama">
+                        </div>
+                        <button id="save-rekening" class="admin-save-btn">Simpan Rekening</button>
+                    </div>
+                    
+                    <!-- Tab Donasi & Keuangan -->
+                    <div id="donasi" class="tab-pane">
+                        <h3>Kelola Donasi & Keuangan</h3>
+                        <div class="admin-section">
+                            <h4>Daftar Donatur</h4>
+                            <div id="donation-container">
+                                <!-- Donatur akan ditambahkan secara dinamis -->
+                            </div>
+                            <button id="add-donation" class="admin-add-btn">Tambah Donatur</button>
+                        </div>
+                        <div class="admin-section">
+                            <h4>Keuangan Masjid</h4>
+                            <div id="finance-container">
+                                <!-- Keuangan akan ditambahkan secara dinamis -->
+                            </div>
+                            <button id="add-finance" class="admin-add-btn">Tambah Data Keuangan</button>
+                        </div>
+                        <button id="save-donasi-finance" class="admin-save-btn">Simpan Semua</button>
+                    </div>
+                    
+                    <!-- Tab Petugas -->
+                    <div id="petugas" class="tab-pane">
+                        <h3>Kelola Petugas Sholat</h3>
+                        <div id="staff-container">
+                            <!-- Petugas akan ditambahkan secara dinamis -->
+                        </div>
+                        <button id="add-staff" class="admin-add-btn">Tambah Petugas</button>
+                        <button id="save-staff" class="admin-save-btn">Simpan Petugas</button>
+                    </div>
+                    
+                    <!-- Tab Visibilitas Kontainer -->
+                    <div id="visibility" class="tab-pane">
+                        <h3>Kontrol Visibilitas Kontainer</h3>
+                        <div class="admin-section">
+                            <h4>Kontainer Utama</h4>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="video-container-visibility" checked> 
+                                    Tampilkan Kontainer Video
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="quran-container-visibility" checked> 
+                                    Tampilkan Kontainer Ayat Al-Quran
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h4>Kontainer Kiri</h4>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="qris-container-visibility" checked> 
+                                    Tampilkan Kontainer QRIS
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="bank-container-visibility" checked> 
+                                    Tampilkan Kontainer Rekening
+                                </label>
+                            </div>
+
+
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h4>Kontainer Kanan</h4>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="info-container-visibility" checked> 
+                                    Tampilkan Kontainer Informasi Masjid
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="ramadan-container-visibility" checked> 
+                                    Tampilkan Kontainer Info Ramadhan
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="jumat-container-visibility" checked> 
+                                    Tampilkan Kontainer Jadwal Jumat
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-section">
+                            <h4>Kontainer Footer</h4>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="donatur-container-visibility" checked> 
+                                    Tampilkan Kontainer Daftar Donatur
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="finance-container-visibility" checked> 
+                                    Tampilkan Kontainer Keuangan Masjid
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="staff-footer-container-visibility" checked> 
+                                    Tampilkan Kontainer Petugas Sholat
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button id="save-visibility" class="admin-save-btn">Simpan Pengaturan Visibilitas</button>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="content_manager.js"></script>
+    <script src="script.js"></script>
+    <script src="quran_functions.js"></script>
+</body>
+</html>
